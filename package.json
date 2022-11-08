@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "vue": "^3.2.41",
+    "vue-router": "^4.1.6",
     "vuetify": "^3.0.0"
   },
   "devDependencies": {
+    "@types/node": "^18.11.9",
     "@vitejs/plugin-vue": "^3.2.0",
     "typescript": "^4.6.4",
     "vite": "^3.2.3",
