@@ -4,8 +4,12 @@ const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
+            path: '/',
+            component: () => import('@/components/HelloWorld.vue'),
+        },
+        {
             path: '/board',
-            component: () => import('@/views/BoardView.vue'),
+            component: () => import('@/views/board/BoardView.vue'),
         }
     ]
 })
