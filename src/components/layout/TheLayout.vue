@@ -1,0 +1,16 @@
+<template>
+  <v-app>
+    <the-navigation-drawer />
+    <v-main><slot /></v-main>
+  </v-app>
+</template>
+
+<script>
+import TheNavigationDrawer from '@/components/layout/TheNavigationDrawer.vue'
+export default {
+  name: 'TheLayout',
+  components: { TheNavigationDrawer },
+}
+</script>
+
+<style scoped></style>
