@@ -15,11 +15,11 @@
     <v-list-item>
       <v-btn>Log In</v-btn>
     </v-list-item>
-<!--    <template v-slot:append>-->
-<!--      <v-list-item>English</v-list-item>-->
-<!--      <v-list-item>Dark UI</v-list-item>-->
-<!--      <v-list-item>Help</v-list-item>-->
-<!--    </template>-->
+    <template v-slot:append>
+      <v-list-item>English</v-list-item>
+      <v-list-item>Dark UI</v-list-item>
+      <v-list-item>Help</v-list-item>
+    </template>
   </v-navigation-drawer>
 </template>
 
