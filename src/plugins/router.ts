@@ -12,6 +12,10 @@ const router = createRouter({
       component: () => import('@/views/setup/SetupView.vue'),
     },
     {
+      path: '/lobby',
+      component: () => import('@/views/lobby/LobbyView.vue'),
+    },
+    {
       path: '/board',
       component: () => import('@/views/board/BoardView.vue'),
     },

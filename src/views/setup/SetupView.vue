@@ -1,12 +1,11 @@
 <template>
   <h2>New Game</h2>
-  <v-carousel>
-    <v-carousel-item>
-      <h3>Setup</h3>
-      <h4>no settings yet...</h4>
-      <v-btn>Create Lobby</v-btn></v-carousel-item
-    >
-  </v-carousel>
+  <h3>Game Setup</h3>
+  <div>
+    <v-label>Game Name</v-label>
+    <v-text-field />
+  </div>
+  <v-btn to="/lobby">Create Lobby</v-btn>
 </template>
 
 <script>
