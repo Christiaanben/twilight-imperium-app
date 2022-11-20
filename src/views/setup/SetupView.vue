@@ -5,13 +5,22 @@
     <v-label>Game Name</v-label>
     <v-text-field />
   </div>
-  <v-btn to="/lobby">Create Lobby</v-btn>
+  <v-btn @click="createLobby">Create Lobby</v-btn>
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+import { useGameStore } from '../../stores/game'
+
+export default defineComponent({
   name: 'SetupView',
-}
+  methods: {
+    async createLobby() {
+      await useGameStore().createLobby()
+      this.$router.push('/lobby')
+    },
+  },
+})
 </script>
 
 <style scoped></style>

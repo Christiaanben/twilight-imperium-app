@@ -1,4 +1,5 @@
 <template>
+  <h4>Lobby ID: {{ gameStore.lobbyId }}</h4>
   <v-list>
     <v-list-item>
       You
@@ -12,11 +13,23 @@
 </template>
 
 <script lang="ts">
+import { connect } from '../../services/web-service'
+import { useGameStore } from '../../stores/game'
+
 export default {
   name: 'LobbyView',
+  setup() {
+    const gameStore = useGameStore()
+    return {
+      gameStore,
+    }
+  },
   data: () => ({
     isReady: false,
   }),
+  mounted() {
+    connect('lobby')
+  },
 }
 </script>
 
