@@ -6,7 +6,7 @@
   <h3>Enter game ID</h3>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'HomeView',
 }

@@ -5,7 +5,7 @@
   </v-app>
 </template>
 
-<script>
+<script lang="ts">
 import TheNavigationDrawer from '@/components/layout/TheNavigationDrawer.vue'
 export default {
   name: 'TheLayout',
