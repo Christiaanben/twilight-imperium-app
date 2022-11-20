@@ -3,7 +3,7 @@
   <h3>Game Setup</h3>
   <div>
     <v-label>Game Name</v-label>
-    <v-text-field />
+    <v-text-field v-model="name" />
   </div>
   <v-btn @click="createLobby">Create Lobby</v-btn>
 </template>
@@ -14,9 +14,18 @@ import { useGameStore } from '../../stores/game'
 
 export default defineComponent({
   name: 'SetupView',
+  setup() {
+    const gameStore = useGameStore()
+    return {
+      gameStore,
+    }
+  },
+  data: () => ({
+    name: '',
+  }),
   methods: {
     async createLobby() {
-      await useGameStore().createLobby()
+      await this.gameStore.createLobby(this.name)
       this.$router.push('/lobby')
     },
   },

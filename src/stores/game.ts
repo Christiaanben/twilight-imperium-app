@@ -6,8 +6,8 @@ export const useGameStore = defineStore('game', {
     lobbyId: null as string | null,
   }),
   actions: {
-    async createLobby() {
-      await webService.createLobby('COOLIES').then((value) => {
+    async createLobby(lobbyName: string) {
+      await webService.createLobby(lobbyName).then((value) => {
         console.log('value', value)
         this.lobbyId = value['id']
       })
