@@ -12,7 +12,9 @@ export default defineComponent({
   mounted() {
     const app = new Application()
     console.log(typeof this.$refs.pixi)
-    this.$refs.pixi?.appendChild(app.view)
+    const pixiDiv = this.$refs.pixi as HTMLDivElement
+    const pixiCanvas = app.view as HTMLCanvasElement
+    pixiDiv.appendChild(pixiCanvas)
     Assets.load('/concrete.png').then((texture) => {
       const sprite = new Sprite(texture)
       sprite.height /= 6
