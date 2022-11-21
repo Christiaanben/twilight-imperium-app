@@ -29,6 +29,6 @@
     "vue-tsc": "^1.0.9"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknow"
+    "**/*": "prettier --write --ignore-unknown"
   }
 }
