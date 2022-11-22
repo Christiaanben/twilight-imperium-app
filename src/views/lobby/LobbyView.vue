@@ -13,10 +13,10 @@
 </template>
 
 <script lang="ts">
-import { connect } from '../../services/web-service'
 import { useGameStore } from '../../stores/game'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
   name: 'LobbyView',
   setup() {
     const gameStore = useGameStore()
@@ -28,9 +28,9 @@ export default {
     isReady: false,
   }),
   mounted() {
-    connect('lobby')
+    this.gameStore.connectWS()
   },
-}
+})
 </script>
 
 <style scoped></style>

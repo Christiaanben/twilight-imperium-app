@@ -12,5 +12,9 @@ export const useGameStore = defineStore('game', {
         this.lobbyId = value['id']
       })
     },
+    connectWS() {
+      if (this.lobbyId !== null) webService.connect(this.lobbyId)
+      else console.warn("Can't connect. No lobbyId")
+    },
   },
 })
