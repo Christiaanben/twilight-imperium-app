@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer width="120">
-    <v-list-item to="/"> <img src="/vite.svg" class="logo" alt="Vite logo" />TI</v-list-item>
+    <v-list-item to="/"><v-img src="/icon.jpg" width="48" /></v-list-item>
     <v-list-item to="/setup"> Setup</v-list-item>
     <v-list-item to="/board"> Board</v-list-item>
     <v-list-item
