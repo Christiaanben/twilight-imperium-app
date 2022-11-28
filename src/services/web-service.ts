@@ -1,5 +1,7 @@
 import { useWebSocket } from '@vueuse/core'
 import axios from 'axios'
+import { NEW_PLAYER } from './web-service/constants'
+import { useGameStore } from '../stores/game'
 
 const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_WEB_URL,
@@ -19,7 +21,9 @@ export function connect(lobbyId: string) {
       console.log('I just connected!')
     },
     onMessage(ws, event) {
-      console.log('new message on ws:', event)
+      const data = JSON.parse(event.data)
+      console.log('new event on ws:', data)
+      if (data.event === NEW_PLAYER) useGameStore().handleNewPlayerEvent()
     },
   })
 }

@@ -1,7 +1,7 @@
 <template>
   <h4>Lobby ID: {{ gameStore.lobbyId }}</h4>
   <v-list>
-    <v-list-item>
+    <v-list-item v-for="player in gameStore.lobby?.players">
       <div class="ma-2">You</div>
       <v-row>
         <v-col cols="8"> <v-select label="Faction" :items="['Lions', 'Bugs', 'Fish', 'Humans']" /></v-col
