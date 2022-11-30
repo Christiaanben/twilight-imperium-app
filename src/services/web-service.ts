@@ -18,11 +18,11 @@ export function createLobby(lobbyName: string): Promise<Record<string, string>> 
 export function connect(lobbyId: string) {
   const { status, data, send, open, close } = useWebSocket(`${import.meta.env.VITE_WEB_WS}/ws/game/${lobbyId}/`, {
     onConnected() {
-      console.log('I just connected!')
+      console.log('[websocket] connected')
     },
     onMessage(ws, event) {
       const data = JSON.parse(event.data)
-      console.log('new event on ws:', data)
+      console.log('[websocket][event]', data)
       if (data.event === NEW_PLAYER) useGameStore().handleNewPlayerEvent()
     },
   })

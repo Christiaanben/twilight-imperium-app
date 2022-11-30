@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import * as webService from '../services/web-service'
 import { Lobby } from '../models/lobby'
+import { Player } from '../models/player'
 
 export const useGameStore = defineStore('game', {
   state: () => ({
@@ -20,7 +21,7 @@ export const useGameStore = defineStore('game', {
     },
     handleNewPlayerEvent() {
       console.debug('handleNewPlayerEvent')
-      if (this.lobby) this.lobby.players.push('John')
+      if (this.lobby) this.lobby.players.push(new Player())
     },
   },
 })
