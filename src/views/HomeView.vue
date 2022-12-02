@@ -26,6 +26,7 @@ export default defineComponent({
   methods: {
     connect() {
       this.gameStore.lobbyId = this.lobbyId
+      this.gameStore.fetchLobby(this.lobbyId)
       this.$router.push('/lobby')
     },
   },

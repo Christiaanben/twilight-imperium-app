@@ -9,6 +9,9 @@ export const useGameStore = defineStore('game', {
     lobby: null as Lobby | null,
   }),
   actions: {
+    async fetchLobby(lobbyId: string) {
+      this.lobby = await webService.fetchLobby(lobbyId)
+    },
     async createLobby(lobbyName: string) {
       await webService.createLobby(lobbyName).then((value) => {
         this.lobbyId = value['id']
