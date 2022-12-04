@@ -4,6 +4,7 @@ import { NEW_PLAYER } from './web-service/constants'
 import { useGameStore } from '../stores/game'
 import { Lobby } from '../models/lobby'
 import type { LobbyResponse } from './web-service/interfaces'
+import { Player } from '../models/player'
 
 const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_WEB_URL,
@@ -19,7 +20,8 @@ export function createLobby(lobbyName: string): Promise<Record<string, string>> 
 
 export function fetchLobby(lobbyId: string): Promise<Lobby> {
   return axiosClient.get(`/api/lobbies/${lobbyId}/`).then((response: AxiosResponse<LobbyResponse>) => {
-    return new Lobby(response.data.id, response.data.name, [])
+    const players = response.data.players.map((playerResponse) => new Player())
+    return new Lobby(response.data.id, response.data.name, players)
   })
 }
 
