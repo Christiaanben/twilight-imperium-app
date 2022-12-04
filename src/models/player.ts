@@ -3,5 +3,9 @@ import type { Color } from '../interfaces/color'
 
 export class Player {
   faction?: Faction
-  color?: Color
+  color: Color | null
+
+  constructor({ color = null } = {}) {
+    this.color = color
+  }
 }

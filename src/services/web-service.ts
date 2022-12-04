@@ -20,7 +20,7 @@ export function createLobby(lobbyName: string): Promise<Record<string, string>> 
 
 export function fetchLobby(lobbyId: string): Promise<Lobby> {
   return axiosClient.get(`/api/lobbies/${lobbyId}/`).then((response: AxiosResponse<LobbyResponse>) => {
-    const players = response.data.players.map((playerResponse) => new Player())
+    const players = response.data.players.map((playerResponse) => new Player({ color: playerResponse.color }))
     return new Lobby(response.data.id, response.data.name, players)
   })
 }
