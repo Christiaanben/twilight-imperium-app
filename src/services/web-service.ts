@@ -5,6 +5,7 @@ import { useGameStore } from '../stores/game'
 import { Lobby } from '../models/lobby'
 import type { LobbyResponse } from './web-service/interfaces'
 import { Player } from '../models/player'
+import { useAuthStore } from '../stores/auth'
 
 const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_WEB_URL,
@@ -26,9 +27,8 @@ export function fetchLobby(lobbyId: string): Promise<Lobby> {
 }
 
 export function connect(lobbyId: string) {
-  const token = 'token'
   const { status, data, send, open, close } = useWebSocket(
-    `${import.meta.env.VITE_WEB_WS}/ws/game/${lobbyId}/?token=${token}`,
+    `${import.meta.env.VITE_WEB_WS}/ws/game/${lobbyId}/?token=${useAuthStore().token}`,
     {
       onConnected() {
         console.log('[websocket] connected')
