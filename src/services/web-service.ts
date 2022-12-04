@@ -1,7 +1,7 @@
 import { useWebSocket } from '@vueuse/core'
 import axios, { AxiosResponse } from 'axios'
 import { NEW_PLAYER } from './web-service/constants'
-import { useGameStore } from '../stores/game'
+import { useLobbyStore } from '../stores/lobby'
 import { Lobby } from '../models/lobby'
 import type { LobbyResponse } from './web-service/interfaces'
 import { Player } from '../models/player'
@@ -36,7 +36,7 @@ export function connect(lobbyId: string) {
       onMessage(ws, event) {
         const data = JSON.parse(event.data)
         console.log('[websocket][event]', data)
-        if (data.event === NEW_PLAYER) useGameStore().handleNewPlayerEvent()
+        if (data.event === NEW_PLAYER) useLobbyStore().handleNewPlayerEvent()
       },
     }
   )

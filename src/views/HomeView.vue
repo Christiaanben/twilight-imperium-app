@@ -9,15 +9,15 @@
 </template>
 
 <script lang="ts">
-import { useGameStore } from '../stores/game'
+import { useLobbyStore } from '../stores/lobby'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'HomeView',
   setup() {
-    const gameStore = useGameStore()
+    const lobbyStore = useLobbyStore()
     return {
-      gameStore,
+      lobbyStore,
     }
   },
   data: () => ({
@@ -25,8 +25,7 @@ export default defineComponent({
   }),
   methods: {
     connect() {
-      this.gameStore.lobbyId = this.lobbyId
-      this.gameStore.fetchLobby(this.lobbyId)
+      this.lobbyStore.fetchLobby(this.lobbyId)
       this.$router.push('/lobby')
     },
   },

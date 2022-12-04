@@ -3,7 +3,7 @@ import * as webService from '../services/web-service'
 import { Lobby } from '../models/lobby'
 import { Player } from '../models/player'
 
-export const useGameStore = defineStore('game', {
+export const useLobbyStore = defineStore('lobby', {
   state: () => ({
     lobby: null as Lobby | null,
   }),
