@@ -2,10 +2,14 @@ import { defineStore } from 'pinia'
 import * as webService from '../services/web-service'
 import { Lobby } from '../models/lobby'
 import { Player } from '../models/player'
+import { UseWebSocketReturn } from '@vueuse/core'
+import { Ref } from 'vue'
+import { PlayerEventInfo } from '../services/web-service/interfaces'
 
 export const useLobbyStore = defineStore('lobby', {
   state: () => ({
     lobby: null as Lobby | null,
+    ws: null as Ref<UseWebSocketReturn<any>> | null,
   }),
   actions: {
     async fetchLobby(lobbyId: string) {
@@ -18,12 +22,16 @@ export const useLobbyStore = defineStore('lobby', {
     },
     connectWS() {
       const lobbyId = this.lobby?.id
-      if (lobbyId !== undefined) webService.connect(lobbyId)
+      if (lobbyId !== undefined) this.ws = webService.connect(lobbyId)
       else console.warn("Can't connect. No lobbyId")
     },
-    handleNewPlayerEvent() {
-      console.debug('handleNewPlayerEvent')
+    handleNewPlayerEvent(data: PlayerEventInfo) {
+      console.debug('handleNewPlayerEvent', data)
       if (this.lobby) this.lobby.players.push(new Player())
+    },
+    handleUpdatePlayerEvent(data: PlayerEventInfo) {
+      console.debug('handleUpdatePlayerEvent', data)
+      if (this.lobby) this.lobby.players[0].color = data.player.color
     },
   },
 })

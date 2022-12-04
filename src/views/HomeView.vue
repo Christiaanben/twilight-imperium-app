@@ -24,8 +24,8 @@ export default defineComponent({
     lobbyId: '',
   }),
   methods: {
-    connect() {
-      this.lobbyStore.fetchLobby(this.lobbyId)
+    async connect() {
+      await this.lobbyStore.fetchLobby(this.lobbyId)
       this.$router.push('/lobby')
     },
   },
