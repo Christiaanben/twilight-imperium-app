@@ -5,7 +5,6 @@ import { Player } from '../models/player'
 
 export const useGameStore = defineStore('game', {
   state: () => ({
-    lobbyId: null as string | null,
     lobby: null as Lobby | null,
   }),
   actions: {
@@ -14,12 +13,12 @@ export const useGameStore = defineStore('game', {
     },
     async createLobby(lobbyName: string) {
       await webService.createLobby(lobbyName).then((value) => {
-        this.lobbyId = value['id']
         this.lobby = new Lobby(value['id'], lobbyName, [])
       })
     },
     connectWS() {
-      if (this.lobbyId !== null) webService.connect(this.lobbyId)
+      const lobbyId = this.lobby?.id
+      if (lobbyId !== undefined) webService.connect(lobbyId)
       else console.warn("Can't connect. No lobbyId")
     },
     handleNewPlayerEvent() {
