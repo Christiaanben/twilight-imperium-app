@@ -24,14 +24,18 @@ export function fetchLobby(lobbyId: string): Promise<Lobby> {
 }
 
 export function connect(lobbyId: string) {
-  const { status, data, send, open, close } = useWebSocket(`${import.meta.env.VITE_WEB_WS}/ws/game/${lobbyId}/`, {
-    onConnected() {
-      console.log('[websocket] connected')
-    },
-    onMessage(ws, event) {
-      const data = JSON.parse(event.data)
-      console.log('[websocket][event]', data)
-      if (data.event === NEW_PLAYER) useGameStore().handleNewPlayerEvent()
-    },
-  })
+  const token = 'token'
+  const { status, data, send, open, close } = useWebSocket(
+    `${import.meta.env.VITE_WEB_WS}/ws/game/${lobbyId}/?token=${token}`,
+    {
+      onConnected() {
+        console.log('[websocket] connected')
+      },
+      onMessage(ws, event) {
+        const data = JSON.parse(event.data)
+        console.log('[websocket][event]', data)
+        if (data.event === NEW_PLAYER) useGameStore().handleNewPlayerEvent()
+      },
+    }
+  )
 }
