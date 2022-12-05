@@ -5,8 +5,8 @@
     </template>
     <v-card>
       <v-card-text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua.
+        <v-label>TOKEN:</v-label>
+        <v-text-field v-model="authStore.token" />
       </v-card-text>
       <v-card-actions>
         <v-btn color="primary" block @click="dialog = false">Close Dialog</v-btn>
@@ -16,8 +16,16 @@
 </template>
 
 <script lang="ts">
+import { useAuthStore } from '../../stores/auth'
+
 export default {
   name: 'SignInDialog',
+  setup() {
+    const authStore = useAuthStore()
+    return {
+      authStore,
+    }
+  },
   data: () => ({
     dialog: false,
   }),
