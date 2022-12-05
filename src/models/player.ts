@@ -1,12 +1,15 @@
 import type { Faction } from '../interfaces/faction'
 import type { Color } from '../interfaces/color'
 import * as webService from '../services/web-service'
+import type { PlayerResponse } from '../services/web-service/interfaces'
 
 export class Player {
+  id: number | null
   faction?: Faction
   private _color: Color | null
 
-  constructor({ color = null } = {}) {
+  constructor({ id = null as null | number, color = null } = {}) {
+    this.id = id
     this._color = color
   }
 
@@ -23,7 +26,15 @@ export class Player {
 
   toJson() {
     return {
+      id: this.id,
       color: this.color,
     }
+  }
+
+  static fromJson(playerResponse: PlayerResponse): Player {
+    return new Player({
+      id: playerResponse.id,
+      color: playerResponse.color,
+    })
   }
 }

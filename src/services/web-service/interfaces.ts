@@ -1,4 +1,5 @@
 export interface PlayerResponse {
+  id: number
   user: number
   color: null
   race: null

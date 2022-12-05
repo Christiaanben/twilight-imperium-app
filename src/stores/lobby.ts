@@ -31,7 +31,12 @@ export const useLobbyStore = defineStore('lobby', {
     },
     handleUpdatePlayerEvent(data: PlayerEventInfo) {
       console.debug('handleUpdatePlayerEvent', data)
-      if (this.lobby) this.lobby.players[0].color = data.player.color
+      if (this.lobby) {
+        this.lobby.players = this.lobby.players.map((player) => {
+          if (data.player.id == player.id) return Player.fromJson(data.player)
+          return player
+        })
+      }
     },
   },
 })
