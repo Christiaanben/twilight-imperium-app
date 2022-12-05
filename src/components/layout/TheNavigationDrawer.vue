@@ -14,7 +14,7 @@
       <v-btn>Sign Up</v-btn>
     </v-list-item>
     <v-list-item>
-      <v-btn>Log In</v-btn>
+      <sign-in-dialog />
     </v-list-item>
     <template v-slot:append>
       <v-list-item>English</v-list-item>
@@ -25,8 +25,10 @@
 </template>
 
 <script lang="ts">
+import SignInDialog from '../dialogs/SignInDialog.vue'
 export default {
   name: 'TheNavigationDrawer',
+  components: { SignInDialog },
 }
 </script>
 
