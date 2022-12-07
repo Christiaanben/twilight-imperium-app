@@ -27,7 +27,7 @@ export const useLobbyStore = defineStore('lobby', {
     },
     handleNewPlayerEvent(data: PlayerEventInfo) {
       console.debug('handleNewPlayerEvent', data)
-      if (this.lobby) this.lobby.players.push(new Player())
+      if (this.lobby) this.lobby.players.push(Player.fromJson(data.player))
     },
     handleUpdatePlayerEvent(data: PlayerEventInfo) {
       console.debug('handleUpdatePlayerEvent', data)
