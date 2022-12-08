@@ -59,7 +59,7 @@ export default defineComponent({
       return COLORS.filter((v) => !playerColors.includes(v))
     },
     isDisabled(player: Player): boolean {
-      return player.user?.id !== this.authStore.user.id
+      return player.user?.id != this.authStore.user.id
     },
   },
 })
