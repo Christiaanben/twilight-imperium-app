@@ -31,9 +31,7 @@ export class Player {
     return new Player({
       id: playerResponse.id,
       color: playerResponse.color,
-      user: {
-        id: playerResponse.user,
-      },
+      user: playerResponse.user,
     })
   }
 

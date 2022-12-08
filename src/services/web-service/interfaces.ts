@@ -1,6 +1,11 @@
+export interface UserResponse {
+  id: string
+  email: string
+}
+
 export interface PlayerResponse {
   id: number
-  user: string
+  user: UserResponse
   color: null
   race: null
 }
