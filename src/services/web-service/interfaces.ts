@@ -1,6 +1,6 @@
 export interface PlayerResponse {
   id: number
-  user: number
+  user: string
   color: null
   race: null
 }

@@ -5,10 +5,15 @@
       <div class="ma-2">Your player: {{ player }}</div>
       <v-row>
         <v-col cols="8">
-          <v-select v-model="player.faction" :items="getAvailableFactions()" label="Faction" />
+          <v-select
+            v-model="player.faction"
+            :items="getAvailableFactions()"
+            label="Faction"
+            :disabled="isDisabled(player)"
+          />
         </v-col>
         <v-col cols="4">
-          <v-select v-model="player.color" :items="getAvailableColors()" label="Color" />
+          <v-select v-model="player.color" :items="getAvailableColors()" label="Color" :disabled="isDisabled(player)" />
         </v-col>
       </v-row>
     </v-list-item>
@@ -22,12 +27,16 @@ import { useLobbyStore } from '../../stores/lobby'
 import { defineComponent } from 'vue'
 import { Faction, FACTIONS } from '../../interfaces/faction'
 import { Color, COLORS } from '../../interfaces/color'
+import { Player } from '../../models/player'
+import { useAuthStore } from '../../stores/auth'
 
 export default defineComponent({
   name: 'LobbyView',
   setup() {
+    const authStore = useAuthStore()
     const lobbyStore = useLobbyStore()
     return {
+      authStore,
       lobbyStore,
       FACTIONS,
       COLORS,
@@ -48,6 +57,9 @@ export default defineComponent({
     getAvailableColors(): Color[] {
       const playerColors = this.lobbyStore.lobby?.players.map((player) => player.color) || []
       return COLORS.filter((v) => !playerColors.includes(v))
+    },
+    isDisabled(player: Player): boolean {
+      return player.user?.id !== this.authStore.user.id
     },
   },
 })
