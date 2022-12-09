@@ -46,7 +46,8 @@ export default defineComponent({
     isReady: false,
     MAX_PLAYER: 6,
   }),
-  mounted() {
+  async mounted() {
+    await this.lobbyStore.fetchLobby(this.$route.params.id as string)
     this.lobbyStore.connectWS()
   },
   methods: {

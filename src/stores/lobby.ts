@@ -16,9 +16,8 @@ export const useLobbyStore = defineStore('lobby', {
       this.lobby = await webService.fetchLobby(lobbyId)
     },
     async createLobby(lobbyName: string) {
-      await webService.createLobby(lobbyName).then((value) => {
-        this.lobby = new Lobby(value['id'], lobbyName, [])
-      })
+      const lobbyResponse = await webService.createLobby(lobbyName)
+      this.lobby = new Lobby(lobbyResponse['id'], lobbyName, [])
     },
     connectWS() {
       const lobbyId = this.lobby?.id

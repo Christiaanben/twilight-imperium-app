@@ -26,7 +26,7 @@ export default defineComponent({
   methods: {
     async connect() {
       await this.lobbyStore.fetchLobby(this.lobbyId)
-      this.$router.push('/lobby')
+      this.$router.push({ name: 'lobby', params: { id: this.lobbyId } })
     },
   },
 })

@@ -26,7 +26,7 @@ export default defineComponent({
   methods: {
     async createLobby() {
       await this.lobbyStore.createLobby(this.name)
-      this.$router.push('/lobby')
+      this.$router.push({ name: 'lobby', params: { id: this.lobbyStore.lobby?.id } })
     },
   },
 })
