@@ -27,7 +27,7 @@ import { useLobbyStore } from '../../stores/lobby'
 import { defineComponent } from 'vue'
 import { Faction, FACTIONS } from '../../interfaces/faction'
 import { Color, COLORS } from '../../interfaces/color'
-import { Player } from '../../models/player'
+import type { Player } from '../../models/player'
 import { useAuthStore } from '../../stores/auth'
 
 export default defineComponent({
