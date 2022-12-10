@@ -1,3 +1,5 @@
+import type { Faction } from '../../interfaces/faction'
+
 export interface UserResponse {
   id: string
   email: string
@@ -7,7 +9,7 @@ export interface PlayerResponse {
   id: number
   user: UserResponse
   color: null
-  race: null
+  faction: Faction
 }
 
 export interface PlayerEventInfo {

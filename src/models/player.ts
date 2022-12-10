@@ -6,14 +6,20 @@ import type { User } from '../interfaces/user'
 
 export class Player {
   id: number | null
-  faction?: Faction
   _color: Color | null // removed private field. typescript both ignores and enforces the field when type checking, so it causes errors
+  faction: Faction | null
   user: User | null
 
-  constructor({ id = null as null | number, color = null, user = null as User | null } = {}) {
+  constructor({
+    id = null as null | number,
+    faction = null as null | Faction,
+    color = null,
+    user = null as User | null,
+  } = {}) {
     this.id = id
     this._color = color
     this.user = user
+    this.faction = faction
   }
 
   get color(): Color | null {
@@ -32,6 +38,7 @@ export class Player {
       id: playerResponse.id,
       color: playerResponse.color,
       user: playerResponse.user,
+      faction: playerResponse.faction,
     })
   }
 
