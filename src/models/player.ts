@@ -9,17 +9,20 @@ export class Player {
   _color: Color | null // removed private field. typescript both ignores and enforces the field when type checking, so it causes errors
   _faction: Faction | null
   user: User | null
+  isReady: boolean
 
   constructor({
     id = null as null | number,
     faction = null as null | Faction,
     color = null,
     user = null as User | null,
+    isReady = false,
   } = {}) {
     this.id = id
     this._color = color
     this._faction = faction
     this.user = user
+    this.isReady = isReady
   }
 
   get faction(): Faction | null {
