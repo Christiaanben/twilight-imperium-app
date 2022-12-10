@@ -10,6 +10,7 @@ export interface PlayerResponse {
   user: UserResponse
   color: null
   faction: Faction
+  is_ready: boolean
 }
 
 export interface PlayerEventInfo {

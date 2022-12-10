@@ -53,6 +53,7 @@ export class Player {
       color: playerResponse.color,
       user: playerResponse.user,
       faction: playerResponse.faction,
+      isReady: playerResponse.is_ready,
     })
   }
 
