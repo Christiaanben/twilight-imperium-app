@@ -5,12 +5,18 @@ import { Player } from '../models/player'
 import { UseWebSocketReturn } from '@vueuse/core'
 import { Ref } from 'vue'
 import { PlayerEventInfo } from '../services/web-service/interfaces'
+import { useAuthStore } from './auth'
 
 export const useLobbyStore = defineStore('lobby', {
   state: () => ({
     lobby: null as Lobby | null,
     ws: null as Ref<UseWebSocketReturn<any>> | null,
   }),
+  getters: {
+    getPlayer(): Player | null {
+      return this.lobby?.players.find((p) => p.user?.id == useAuthStore().user.id) || null
+    },
+  },
   actions: {
     async fetchLobby(lobbyId: string) {
       this.lobby = await webService.fetchLobby(lobbyId)

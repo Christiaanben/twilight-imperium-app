@@ -9,7 +9,7 @@ export class Player {
   _color: Color | null // removed private field. typescript both ignores and enforces the field when type checking, so it causes errors
   _faction: Faction | null
   user: User | null
-  isReady: boolean
+  _isReady: boolean
 
   constructor({
     id = null as null | number,
@@ -22,7 +22,7 @@ export class Player {
     this._color = color
     this._faction = faction
     this.user = user
-    this.isReady = isReady
+    this._isReady = isReady
   }
 
   get faction(): Faction | null {
@@ -47,6 +47,17 @@ export class Player {
     }
   }
 
+  get isReady(): boolean {
+    return this._isReady
+  }
+
+  set isReady(value: boolean) {
+    if (this._isReady !== value) {
+      this._isReady = value
+      webService.updatePlayer(this)
+    }
+  }
+
   static fromJson(playerResponse: PlayerResponse): Player {
     return new Player({
       id: playerResponse.id,
@@ -62,6 +73,7 @@ export class Player {
       id: this.id,
       color: this.color,
       faction: this.faction,
+      is_ready: this.isReady,
     }
   }
 }
