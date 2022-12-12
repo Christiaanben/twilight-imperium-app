@@ -17,6 +17,7 @@ export default defineComponent({
     }
   },
   mounted() {
+    this.gameStore.hydrateGame('1')
     const app = new Application({
       height: 990,
       width: 1920,

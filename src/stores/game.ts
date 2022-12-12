@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { Tile } from '../models/tile'
+import { fetchGame } from '../services/web-service'
 
 export const useGameStore = defineStore('game', {
   state: () => ({
@@ -13,4 +14,9 @@ export const useGameStore = defineStore('game', {
       new Tile({ id: 38, q: 1, r: 0 }),
     ],
   }),
+  actions: {
+    hydrateGame(gameId: string) {
+      fetchGame(gameId).then((response) => console.log('response', response))
+    },
+  },
 })

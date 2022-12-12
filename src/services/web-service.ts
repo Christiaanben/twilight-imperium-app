@@ -50,3 +50,11 @@ export function updatePlayer(player: Player) {
     })
   )
 }
+
+export function fetchGame(gameId: string) {
+  return axiosClient.get(`/api/games/${gameId}/`)
+  //   .then((response: AxiosResponse<LobbyResponse>) => {
+  //   const players = response.data.players.map((playerResponse) => Player.fromJson(playerResponse))
+  //   return new Lobby(response.data.id, response.data.name, players)
+  // })
+}
