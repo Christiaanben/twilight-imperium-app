@@ -16,8 +16,8 @@ export default defineComponent({
       gameStore,
     }
   },
-  mounted() {
-    this.gameStore.hydrateGame('1')
+  async mounted() {
+    await this.gameStore.hydrateGame('1')
     const app = new Application({
       height: 990,
       width: 1920,
@@ -28,13 +28,13 @@ export default defineComponent({
     pixiDiv.appendChild(pixiCanvas)
     const scaleFactor = 1.8
 
-    this.gameStore.tiles.forEach((tile) => {
-      Assets.load(`/img/systems/${tile.id}.png`).then((texture) => {
+    this.gameStore.systems.forEach((system) => {
+      Assets.load(`/img/systems/${system.id}.png`).then((texture) => {
         const sprite = new Sprite(texture)
         sprite.scale.set(1 / scaleFactor, 1 / scaleFactor)
         const size = sprite.width / 2
 
-        let point = hexToPoint(tile.getHex())
+        let point = hexToPoint(system.getHex())
         sprite.x = app.renderer.width / 2 + point.x * size
         sprite.y = app.renderer.height / 2 + point.y * size
 

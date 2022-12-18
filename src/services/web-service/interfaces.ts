@@ -22,3 +22,13 @@ export interface LobbyResponse {
   name: string
   players: PlayerResponse[]
 }
+
+export interface SystemResponse {
+  id: number
+  q: number
+  r: number
+}
+
+export interface GameResponse {
+  systems: SystemResponse[]
+}
