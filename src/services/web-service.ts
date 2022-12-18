@@ -3,9 +3,10 @@ import axios, { AxiosResponse } from 'axios'
 import { NEW_PLAYER, UPDATE_PLAYER } from './web-service/constants'
 import { useLobbyStore } from '../stores/lobby'
 import { Lobby } from '../models/lobby'
-import type { LobbyResponse } from './web-service/interfaces'
+import type { GameResponse, LobbyResponse } from './web-service/interfaces'
 import { Player } from '../models/player'
 import { useAuthStore } from '../stores/auth'
+import { System } from '../models/system'
 
 const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_WEB_URL,
@@ -49,4 +50,10 @@ export function updatePlayer(player: Player) {
       },
     })
   )
+}
+
+export function fetchGame(gameId: string) {
+  return axiosClient.get(`/api/games/${gameId}/`).then((response: AxiosResponse<GameResponse>) => {
+    return response.data.systems.map((systemResponse) => System.fromJson(systemResponse))
+  })
 }
