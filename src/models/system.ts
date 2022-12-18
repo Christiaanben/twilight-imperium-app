@@ -16,11 +16,11 @@ export class System {
     return { q: this.q, r: this.r }
   }
 
-  static fromJson(tileResponse: SystemResponse): System {
+  static fromJson(systemResponse: SystemResponse): System {
     return new System({
-      id: tileResponse.id,
-      q: tileResponse.q,
-      r: tileResponse.r,
+      id: systemResponse.id,
+      q: systemResponse.q,
+      r: systemResponse.r,
     })
   }
 }
