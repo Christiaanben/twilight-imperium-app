@@ -17,7 +17,7 @@ export default defineComponent({
     }
   },
   async mounted() {
-    await this.gameStore.hydrateGame('1')
+    await this.gameStore.hydrateGame(this.$route.params.id as string)
     const app = new Application({
       height: 990,
       width: 1920,
