@@ -1,0 +1,8 @@
+@font-face {
+  font-family: twilight;
+  src: url('/fonts/Handel Gothic D Bold.otf');
+}
+
+:root {
+  font-family: twilight;
+}
