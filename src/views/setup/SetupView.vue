@@ -10,14 +10,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useGameStore } from '../../stores/game'
+import { useLobbyStore } from '../../stores/lobby'
 
 export default defineComponent({
   name: 'SetupView',
   setup() {
-    const gameStore = useGameStore()
+    const lobbyStore = useLobbyStore()
     return {
-      gameStore,
+      lobbyStore,
     }
   },
   data: () => ({
@@ -25,8 +25,8 @@ export default defineComponent({
   }),
   methods: {
     async createLobby() {
-      await this.gameStore.createLobby(this.name)
-      this.$router.push('/lobby')
+      await this.lobbyStore.createLobby(this.name)
+      this.$router.push({ name: 'lobby', params: { id: this.lobbyStore.lobby?.id } })
     },
   },
 })

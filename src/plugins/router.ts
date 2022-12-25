@@ -12,11 +12,12 @@ const router = createRouter({
       component: () => import('@/views/setup/SetupView.vue'),
     },
     {
-      path: '/lobby',
+      name: 'lobby',
+      path: '/lobby/:id',
       component: () => import('@/views/lobby/LobbyView.vue'),
     },
     {
-      path: '/board',
+      path: '/board/:id',
       component: () => import('@/views/board/BoardView.vue'),
     },
   ],
