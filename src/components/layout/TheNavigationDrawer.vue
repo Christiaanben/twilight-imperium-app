@@ -1,10 +1,7 @@
 <template>
-  <v-navigation-drawer app v-model="drawer" class="pa-4" expand-on-hover image="/img/space.webp" permanent theme="dark">
+  <v-navigation-drawer class="pa-4" rail-width="90" permanent expand-on-hover rail image="/img/space.webp" theme="dark">
     <v-list>
-      <v-list-item><v-btn color="primary">Log In</v-btn></v-list-item>
-      <v-list-item>
-        <sign-in-dialog />
-      </v-list-item>
+      <v-list-item prepend-icon="mdi-controller" to="/">Join Game</v-list-item>
       <v-list-item prepend-icon="mdi-pencil" to="/setup">Create Lobby</v-list-item>
       <v-list-item prepend-icon="mdi-view-dashboard" to="/board/123">Board</v-list-item>
       <v-list-item
@@ -17,15 +14,17 @@
       <v-list-item prepend-icon="mdi-chat" href="https://discord.com/"> Social</v-list-item>
     </v-list>
     <template v-slot:append>
-      <v-divider></v-divider>
-      <v-list-item class="justify-center pt-3">
-        <v-btn variant="outlined">Sign Up</v-btn>
-      </v-list-item>
-      <v-list-item class="justify-center">English</v-list-item>
-      <v-list-item class="justify-center">Help</v-list-item>
-      <v-list-item class="justify-center"
-        ><v-switch v-model="isDark" :label="isDark ? 'Light' : 'Dark'" color="primary"></v-switch
-      ></v-list-item>
+      <div class="showOnHover hidden">
+        <v-divider></v-divider>
+        <v-list-item class="justify-center pt-3">
+          <sign-in-dialog />
+        </v-list-item>
+        <v-list-item class="justify-center">English</v-list-item>
+        <v-list-item class="justify-center">Help</v-list-item>
+        <v-list-item class="justify-center"
+          ><v-switch v-model="isDark" :label="isDark ? 'Light' : 'Dark'" color="primary"></v-switch
+        ></v-list-item>
+      </div>
     </template>
   </v-navigation-drawer>
 </template>
@@ -36,10 +35,17 @@ export default {
   name: 'TheNavigationDrawer',
   data: () => ({
     isDark: false,
-    drawer: true,
   }),
   components: { SignInDialog },
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-navigation-drawer--is-hovering .showOnHover {
+  display: block !important;
+}
+
+.hidden {
+  display: none;
+}
+</style>

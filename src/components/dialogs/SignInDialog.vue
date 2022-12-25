@@ -1,7 +1,7 @@
 <template>
   <v-dialog width="600" v-model="dialog">
     <template v-slot:activator="{ props }">
-      <v-btn color="primary" v-bind="props"> Sign In </v-btn>
+      <v-btn variant="outlined" v-bind="props"> Sign In </v-btn>
     </template>
     <v-card>
       <v-card-text>
