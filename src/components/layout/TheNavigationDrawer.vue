@@ -1,6 +1,7 @@
 <template>
   <v-navigation-drawer app v-model="drawer" class="pa-4" expand-on-hover image="/img/space.webp" permanent theme="dark">
     <v-list>
+      <v-list-item prepend-icon="mdi-controller" to="/">Join Game</v-list-item>
       <v-list-item prepend-icon="mdi-pencil" to="/setup">Create Lobby</v-list-item>
       <v-list-item prepend-icon="mdi-view-dashboard" to="/board/123">Board</v-list-item>
       <v-list-item
