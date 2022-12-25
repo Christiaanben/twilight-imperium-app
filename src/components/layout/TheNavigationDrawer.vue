@@ -1,10 +1,6 @@
 <template>
   <v-navigation-drawer app v-model="drawer" class="pa-4" expand-on-hover image="/img/space.webp" permanent theme="dark">
     <v-list>
-      <v-list-item><v-btn color="primary">Log In</v-btn></v-list-item>
-      <v-list-item>
-        <sign-in-dialog />
-      </v-list-item>
       <v-list-item prepend-icon="mdi-pencil" to="/setup">Create Lobby</v-list-item>
       <v-list-item prepend-icon="mdi-view-dashboard" to="/board/123">Board</v-list-item>
       <v-list-item
@@ -19,7 +15,7 @@
     <template v-slot:append>
       <v-divider></v-divider>
       <v-list-item class="justify-center pt-3">
-        <v-btn variant="outlined">Sign Up</v-btn>
+        <sign-in-dialog />
       </v-list-item>
       <v-list-item class="justify-center">English</v-list-item>
       <v-list-item class="justify-center">Help</v-list-item>
