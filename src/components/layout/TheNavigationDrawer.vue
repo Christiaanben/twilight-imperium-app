@@ -22,7 +22,7 @@
         <v-list-item class="justify-center">English</v-list-item>
         <v-list-item class="justify-center">Help</v-list-item>
         <v-list-item class="justify-center"
-          ><v-switch v-model="isDark" :label="isDark ? 'Light' : 'Dark'" color="primary"></v-switch
+          ><v-switch v-model="isLightMode" :label="isLightMode ? 'Light' : 'Dark'" color="primary"></v-switch
         ></v-list-item>
       </div>
     </template>
@@ -31,13 +31,30 @@
 
 <script lang="ts">
 import SignInDialog from '../dialogs/SignInDialog.vue'
-export default {
+import { useTheme } from 'vuetify'
+import { defineComponent } from '@vue/runtime-core'
+
+export default defineComponent({
   name: 'TheNavigationDrawer',
-  data: () => ({
-    isDark: false,
-  }),
+  data: () => ({}),
   components: { SignInDialog },
-}
+  setup() {
+    const theme = useTheme()
+    return {
+      theme,
+    }
+  },
+  computed: {
+    isLightMode: {
+      get() {
+        return this.theme.global.name.value == 'light'
+      },
+      set(value: boolean) {
+        this.theme.global.name.value = value ? 'light' : 'dark'
+      },
+    },
+  },
+})
 </script>
 
 <style scoped>
