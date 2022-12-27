@@ -1,12 +1,13 @@
 import { useWebSocket } from '@vueuse/core'
 import axios, { AxiosResponse } from 'axios'
-import { NEW_PLAYER, UPDATE_PLAYER } from './web-service/constants'
+import { NEW_GAME, NEW_PLAYER, UPDATE_PLAYER } from './web-service/constants'
 import { useLobbyStore } from '../stores/lobby'
 import { Lobby } from '../models/lobby'
 import type { GameResponse, LobbyResponse } from './web-service/interfaces'
 import { Player } from '../models/player'
 import { useAuthStore } from '../stores/auth'
 import { System } from '../models/system'
+import { useGameStore } from '../stores/game'
 
 const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_WEB_URL,
@@ -37,6 +38,7 @@ export function connect(lobbyId: string) {
       console.log('[websocket][event]', data)
       if (data.type === NEW_PLAYER) useLobbyStore().handleNewPlayerEvent(data.kwargs)
       if (data.type === UPDATE_PLAYER) useLobbyStore().handleUpdatePlayerEvent(data.kwargs)
+      if (data.type === NEW_GAME) useGameStore().switchToGame(lobbyId)
     },
   })
 }
