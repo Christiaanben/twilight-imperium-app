@@ -9,7 +9,7 @@
         <div class="text-body-2 pl-3" :class="[['agenda', 'promissory'].includes(type) ? 'text-black' : 'text-white']">
           When another player plays an action card other than "Sabotage":<br />Cancel that action card.
         </div>
-        <div v-if="flavor" class="text-white text-center align-self-end pa-2 font-weight-thin font-italic">
+        <div v-if="flavor" class="text-white text-center font-italic mx-1 flavor">
           {{ flavor }}
         </div>
       </div>
@@ -86,5 +86,10 @@ export default defineComponent({
   text-align: left !important;
   padding-top: 24px !important;
   padding-left: 16px !important;
+}
+
+.flavor {
+  line-height: normal;
+  font-size: x-small;
 }
 </style>
