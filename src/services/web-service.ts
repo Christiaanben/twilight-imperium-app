@@ -29,7 +29,7 @@ export function fetchLobby(lobbyId: string): Promise<Lobby> {
 }
 
 export function connect(lobbyId: string) {
-  return useWebSocket(`${import.meta.env.VITE_WEB_WS}/ws/game/${lobbyId}/?token=${useAuthStore().token}`, {
+  return useWebSocket(`${import.meta.env.VITE_WEB_WS}/ws/lobby/${lobbyId}/?token=${useAuthStore().token}`, {
     onConnected() {
       console.log('[websocket] connected')
     },
