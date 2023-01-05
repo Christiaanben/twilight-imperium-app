@@ -6,22 +6,19 @@
 import { defineComponent } from 'vue'
 import { Assets, Sprite } from 'pixi.js'
 import { hexToPoint } from '../../services/hex-service'
+import { app, handleWheelEvent } from '../../services/graphics-service'
 import { useGameStore } from '../../stores/game'
-import { useGraphicsStore } from '../../stores/graphics'
 
 export default defineComponent({
   name: 'BoardView',
   setup() {
     const gameStore = useGameStore()
-    const graphicsStore = useGraphicsStore()
     return {
       gameStore,
-      graphicsStore,
     }
   },
   async mounted() {
     await this.gameStore.hydrateGame(this.$route.params.id as string)
-    const app = this.graphicsStore.app
     const pixiDiv = this.$refs.pixi as HTMLDivElement
     const pixiCanvas = app.view as HTMLCanvasElement
     pixiDiv.appendChild(pixiCanvas)
@@ -45,10 +42,10 @@ export default defineComponent({
       })
     })
 
-    window.addEventListener('wheel', this.graphicsStore.handleMouseWheelEvent)
+    window.addEventListener('wheel', handleWheelEvent)
   },
   unmounted() {
-    window.removeEventListener('wheel', this.graphicsStore.handleMouseWheelEvent)
+    window.removeEventListener('wheel', handleWheelEvent)
   },
   data: () => ({
     canvas: null as CanvasRenderingContext2D | null,
