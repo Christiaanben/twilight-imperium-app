@@ -1,5 +1,4 @@
 <template>
-  <v-btn @click="zoom">Zoom</v-btn>
   <div id="pixiCanvas" ref="pixi"></div>
 </template>
 
@@ -45,15 +44,16 @@ export default defineComponent({
         app.stage.addChild(sprite)
       })
     })
+
+    window.addEventListener('wheel', this.graphicsStore.handleMouseWheelEvent)
+  },
+  unmounted() {
+    window.removeEventListener('wheel', this.graphicsStore.handleMouseWheelEvent)
   },
   data: () => ({
     canvas: null as CanvasRenderingContext2D | null,
   }),
-  methods: {
-    zoom() {
-      this.graphicsStore.app.stage.scale.set(1.2, 1.2)
-    },
-  },
+  methods: {},
 })
 </script>
 
