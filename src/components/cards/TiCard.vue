@@ -27,7 +27,6 @@
       </div>
     </v-img>
   </v-card>
-  ========================
 </template>
 
 <script lang="ts">

@@ -6,7 +6,31 @@
   <h3>Enter game ID</h3>
   <v-text-field label="Lobby ID" v-model="lobbyId" />
   <v-btn @click="connect">Connect</v-btn>
-
+  <v-overlay width="100vw">
+    <template v-slot:activator="{ isActive, props }">
+      <victory-point-tracker v-bind="props" />
+    </template>
+    <v-row>
+      <v-col cols="2" v-for="i in 5">
+        <ti-card
+          type="stage1"
+          title="Expand Borders"
+          subtitle="Status Phase"
+          body="Control 6 planets in non-home systems."
+        />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="2" v-for="i in 5">
+        <ti-card
+          type="stage2"
+          title="Galvanize the People"
+          subtitle="Status Phase"
+          body="Spend a total of 6 tokens from your tactic and/or strategy pools."
+        />
+      </v-col>
+    </v-row>
+  </v-overlay>
   <v-row>
     <v-col cols="4">
       <ti-card
@@ -62,10 +86,11 @@
 import { useLobbyStore } from '../stores/lobby'
 import { defineComponent } from 'vue'
 import TiCard from '../components/cards/TiCard.vue'
+import VictoryPointTracker from '@/components/cards/VictoryPointTracker.vue'
 
 export default defineComponent({
   name: 'HomeView',
-  components: { TiCard },
+  components: { TiCard, VictoryPointTracker },
   setup() {
     const lobbyStore = useLobbyStore()
     return {
