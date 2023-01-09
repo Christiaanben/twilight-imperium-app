@@ -80,17 +80,19 @@
       />
     </v-col>
   </v-row>
+  <hand-cards />
 </template>
 
 <script lang="ts">
 import { useLobbyStore } from '../stores/lobby'
 import { defineComponent } from 'vue'
 import TiCard from '../components/cards/TiCard.vue'
+import HandCards from '../components/cards/HandCards.vue'
 import VictoryPointTracker from '@/components/cards/VictoryPointTracker.vue'
 
 export default defineComponent({
   name: 'HomeView',
-  components: { TiCard, VictoryPointTracker },
+  components: { TiCard, VictoryPointTracker, HandCards },
   setup() {
     const lobbyStore = useLobbyStore()
     return {
