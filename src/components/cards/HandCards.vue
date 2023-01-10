@@ -1,4 +1,3 @@
-import VictoryPointTracker from "*.vue";
 <template>
   <div class="cards">
     <div v-for="(card, i) in cards" class="card">
