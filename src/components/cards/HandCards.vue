@@ -1,18 +1,19 @@
 import VictoryPointTracker from "*.vue";
 <template>
   <div class="cards">
-    <div class="card" v-for="(val, i) in cards">
+    <div v-for="(card, i) in cards" class="card">
       <div
-        class="card-face"
         :style="`background: linear-gradient(-135deg, hsla(240, 100%, 80%, 1), hsla(240, 90%, 45%, 1));transform: translateY(${offset(
           i
-        )}px) rotate(${rotation(i)}deg)`"
+        )}px) rotate(${rotation(i)}deg) scale(.8)`"
+        class="card-face"
       >
         <ti-card
-          type="action"
-          title="Sabotage"
-          body="When another player plays an action card other than 'Sabotage':<br />Cancel that action card."
-          flavor="Unlenn smashed a clenched fist into the bulkhead, green eyes ablaze with rage. The entire plan had been turned on its head. Such incompetence was unfathomable."
+          :type="card.type"
+          :title="card.title"
+          :subtitle="card.subtitle"
+          :body="card.body"
+          :flavor="card.flavor"
         />
       </div>
     </div>
@@ -26,7 +27,51 @@ import TiCard from './TiCard.vue'
 export default defineComponent({
   name: 'HandCards',
   data: () => ({
-    cards: ['1', '2', '3', '4', '5'],
+    cards: [
+      {
+        type: 'action',
+        title: 'Sabotage',
+        subtitle: '',
+        body: 'When another player plays an action card other than "Sabotage":<br />Cancel that action card.',
+        flavor:
+          'Unlenn smashed a clenched fist into the bulkhead, green eyes ablaze with rage. The entire plan had been turned on its head. Such incompetence was unfathomable.',
+      },
+      {
+        type: 'promissory',
+        title: 'Trade Agreement',
+        subtitle: '',
+        body: 'When the blue player replenishes commodities:<br/>The blue player gives you all of his commodities. <br/>Then, return this card to the blue player.',
+        flavor: '',
+      },
+      {
+        type: 'secret',
+        title: 'Unveil Flagship',
+        subtitle: 'Action Phase',
+        body: 'Win a space combat in a system that contains your flagship.<br/> You cannot score this objective if your flagship is destroyed in the combat.',
+        flavor: '',
+      },
+      {
+        type: 'stage1',
+        title: 'Expand Borders',
+        subtitle: 'Status Phase',
+        body: 'Control 6 planets in non-home systems.',
+        flavor: '',
+      },
+      {
+        type: 'agenda',
+        title: 'Conventions of War',
+        subtitle: 'Directive',
+        body: 'For: Players cannot use BOMBARDMENT against units that are on cultural planets.<br/>Against: Each player that voted "Against" discards all of his action cards.',
+        flavor: '',
+      },
+      {
+        type: 'stage2',
+        title: 'Galvanize the People',
+        subtitle: 'Status Phase',
+        body: 'Spend a total of 6 tokens from your tactic and/or strategy pools.',
+        flavor: '',
+      },
+    ],
     rotationRange: 50,
     offsetRange: 80,
   }),
@@ -55,14 +100,13 @@ export default defineComponent({
 }
 
 .card {
-  height: 150px;
   margin: 0 -25px;
   position: relative;
   width: 100px;
 }
 
 .card:after {
-  background: rgba(255, 0, 0, 0.15); /* comment out */
+  /*background: rgba(255, 0, 0, 0.15); !* comment out *!*/
   bottom: 0;
   content: '';
   left: -60px;
@@ -73,6 +117,7 @@ export default defineComponent({
 }
 
 .card-face {
+  margin-left: -50px;
   bottom: 0;
   content: '';
   left: 0;
