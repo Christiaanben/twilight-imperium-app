@@ -11,10 +11,10 @@
     <v-list-item href="https://youtube.com"> Watch</v-list-item>
     <v-list-item href="https://discord.com/"> Social</v-list-item>
     <v-list-item>
-      <v-btn>Sign Up</v-btn>
+      <v-btn color="primary" to="/sign_up"> Sign Up </v-btn>
     </v-list-item>
     <v-list-item>
-      <sign-in-dialog />
+      <v-btn color="primary" to="/sign_in"> Sign Up </v-btn>
     </v-list-item>
     <template v-slot:append>
       <v-list-item>English</v-list-item>
@@ -28,7 +28,7 @@
 import SignInDialog from '../dialogs/SignInDialog.vue'
 export default {
   name: 'TheNavigationDrawer',
-  components: { SignInDialog },
+  components: {SignInDialog},
 }
 </script>
 

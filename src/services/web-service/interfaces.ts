@@ -19,3 +19,9 @@ export interface LobbyResponse {
   name: string
   players: PlayerResponse[]
 }
+
+export interface AuthResponse {
+  token: string
+  display_name: string
+  email: string
+}

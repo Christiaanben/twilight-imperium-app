@@ -3,9 +3,11 @@ import axios, { AxiosResponse } from 'axios'
 import { NEW_PLAYER, UPDATE_PLAYER } from './web-service/constants'
 import { useLobbyStore } from '../stores/lobby'
 import { Lobby } from '../models/lobby'
-import type { LobbyResponse } from './web-service/interfaces'
+import type {LobbyResponse, AuthResponse} from './web-service/interfaces'
 import { Player } from '../models/player'
 import { useAuthStore } from '../stores/auth'
+import {Register} from "../interfaces/register";
+import {SignIn} from "../interfaces/sign-in";
 
 const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_WEB_URL,
@@ -19,6 +21,17 @@ export function createLobby(lobbyName: string): Promise<Record<string, string>> 
     .then((response) => response.data)
 }
 
+export function registerAccount(data: Register): Promise<AxiosResponse<AuthResponse>> {
+  console.log(data)
+  return axiosClient.post("/dj-rest-auth/registration/", data)
+}
+
+
+export function signInAccount(data: SignIn): Promise<AxiosResponse<AuthResponse>> {
+  console.log(data)
+  return axiosClient.post("/dj-rest-auth/login/", data)
+}
+
 export function fetchLobby(lobbyId: string): Promise<Lobby> {
   return axiosClient.get(`/api/lobbies/${lobbyId}/`).then((response: AxiosResponse<LobbyResponse>) => {
     const players = response.data.players.map((playerResponse) => Player.fromJson(playerResponse))
@@ -27,7 +40,7 @@ export function fetchLobby(lobbyId: string): Promise<Lobby> {
 }
 
 export function connect(lobbyId: string) {
-  return useWebSocket(`${import.meta.env.VITE_WEB_WS}/ws/game/${lobbyId}/?token=${useAuthStore().token}`, {
+  return useWebSocket(`${import.meta.env.VITE_WEB_WS}/ws/game/${lobbyId}/?token=${useAuthStore().account?.token}`, {
     onConnected() {
       console.log('[websocket] connected')
     },
