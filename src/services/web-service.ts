@@ -1,13 +1,15 @@
 import { useWebSocket } from '@vueuse/core'
 import axios, { AxiosResponse } from 'axios'
-import { NEW_PLAYER, UPDATE_PLAYER } from './web-service/constants'
+import { NEW_GAME, NEW_PLAYER, UPDATE_PLAYER } from './web-service/constants'
 import { useLobbyStore } from '../stores/lobby'
 import { Lobby } from '../models/lobby'
-import type {LobbyResponse, AuthResponse} from './web-service/interfaces'
+import type {GameResponse, LobbyResponse, AuthResponse} from './web-service/interfaces'
 import { Player } from '../models/player'
 import { useAuthStore } from '../stores/auth'
 import {Register} from "../interfaces/register";
 import {SignIn} from "../interfaces/sign-in";
+import { System } from '../models/system'
+import { useGameStore } from '../stores/game'
 
 const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_WEB_URL,
@@ -40,7 +42,7 @@ export function fetchLobby(lobbyId: string): Promise<Lobby> {
 }
 
 export function connect(lobbyId: string) {
-  return useWebSocket(`${import.meta.env.VITE_WEB_WS}/ws/game/${lobbyId}/?token=${useAuthStore().account?.token}`, {
+  return useWebSocket(`${import.meta.env.VITE_WEB_WS}/ws/lobby/${lobbyId}/?token=${useAuthStore().token}`, {
     onConnected() {
       console.log('[websocket] connected')
     },
@@ -49,6 +51,7 @@ export function connect(lobbyId: string) {
       console.log('[websocket][event]', data)
       if (data.type === NEW_PLAYER) useLobbyStore().handleNewPlayerEvent(data.kwargs)
       if (data.type === UPDATE_PLAYER) useLobbyStore().handleUpdatePlayerEvent(data.kwargs)
+      if (data.type === NEW_GAME) useGameStore().switchToGame(lobbyId)
     },
   })
 }
@@ -62,4 +65,10 @@ export function updatePlayer(player: Player) {
       },
     })
   )
+}
+
+export function fetchGame(gameId: string) {
+  return axiosClient.get(`/api/games/${gameId}/`).then((response: AxiosResponse<GameResponse>) => {
+    return response.data.systems.map((systemResponse) => System.fromJson(systemResponse))
+  })
 }

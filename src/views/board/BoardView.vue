@@ -4,115 +4,53 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Application, Assets, Sprite } from 'pixi.js'
+import { Assets, Sprite } from 'pixi.js'
 import { hexToPoint } from '../../services/hex-service'
+import { app, handleWheelEvent } from '../../services/graphics-service'
+import { useGameStore } from '../../stores/game'
 
 export default defineComponent({
   name: 'BoardView',
-  mounted() {
-    const app = new Application({
-      height: 990,
-      width: 1920,
-      backgroundColor: '0x080810',
-    })
+  setup() {
+    const gameStore = useGameStore()
+    return {
+      gameStore,
+    }
+  },
+  async mounted() {
+    await this.gameStore.hydrateGame(this.$route.params.id as string)
     const pixiDiv = this.$refs.pixi as HTMLDivElement
     const pixiCanvas = app.view as HTMLCanvasElement
     pixiDiv.appendChild(pixiCanvas)
-    const scaleFactor = 1.8
-    Assets.load('/img/systems/18.png').then((texture) => {
-      const sprite = new Sprite(texture)
-      sprite.scale.set(1 / scaleFactor, 1 / scaleFactor)
-      const size = sprite.width / 2
+    const scaleFactor = 3.6
 
-      let point = hexToPoint({ q: 0, r: 0 })
-      sprite.x = app.renderer.width / 2 + point.x * size
-      sprite.y = app.renderer.height / 2 + point.y * size
+    this.gameStore.systems.forEach((system) => {
+      Assets.load(`/img/systems/${system.id}.webp`).then((texture) => {
+        const sprite = new Sprite(texture)
+        sprite.scale.set(1 / scaleFactor, 1 / scaleFactor)
+        const size = sprite.width / 2
 
-      // Rotate around the center
-      sprite.anchor.set(0.5, 0.5)
+        let point = hexToPoint(system.getHex())
+        sprite.x = app.renderer.width / 2 + point.x * size
+        sprite.y = app.renderer.height / 2 + point.y * size
 
-      // Add the sprite to the scene we are building
-      app.stage.addChild(sprite)
+        // Rotate around the center
+        sprite.anchor.set(0.5, 0.5)
+
+        // Add the sprite to the scene we are building
+        app.stage.addChild(sprite)
+      })
     })
-    Assets.load('/img/systems/44.png').then((texture) => {
-      const sprite = new Sprite(texture)
-      sprite.scale.set(1 / scaleFactor, 1 / scaleFactor)
-      sprite.anchor.set(0.5, 0.5)
-      const size = sprite.width / 2
 
-      let point = hexToPoint({ q: 1, r: -1 })
-      sprite.x = app.renderer.width / 2 + point.x * size
-      sprite.y = app.renderer.height / 2 + point.y * size
-
-      app.stage.addChild(sprite)
-    })
-    Assets.load('/img/systems/48.png').then((texture) => {
-      const sprite = new Sprite(texture)
-      sprite.scale.set(1 / scaleFactor, 1 / scaleFactor)
-      sprite.anchor.set(0.5, 0.5)
-      const size = sprite.width / 2
-
-      let point = hexToPoint({ q: 0, r: -1 })
-      sprite.x = app.renderer.width / 2 + point.x * size
-      sprite.y = app.renderer.height / 2 + point.y * size
-
-      app.stage.addChild(sprite)
-    })
-    Assets.load('/img/systems/45.png').then((texture) => {
-      const sprite = new Sprite(texture)
-      sprite.scale.set(1 / scaleFactor, 1 / scaleFactor)
-      sprite.anchor.set(0.5, 0.5)
-      const size = sprite.width / 2
-
-      let point = hexToPoint({ q: -1, r: 0 })
-      sprite.x = app.renderer.width / 2 + point.x * size
-      sprite.y = app.renderer.height / 2 + point.y * size
-
-      app.stage.addChild(sprite)
-    })
-    Assets.load('/img/systems/28.png').then((texture) => {
-      const sprite = new Sprite(texture)
-      sprite.scale.set(1 / scaleFactor, 1 / scaleFactor)
-      sprite.anchor.set(0.5, 0.5)
-      const size = sprite.width / 2
-
-      let point = hexToPoint({ q: -1, r: 1 })
-      sprite.x = app.renderer.width / 2 + point.x * size
-      sprite.y = app.renderer.height / 2 + point.y * size
-
-      app.stage.addChild(sprite)
-    })
-    Assets.load('/img/systems/42.png').then((texture) => {
-      const sprite = new Sprite(texture)
-      sprite.scale.set(1 / scaleFactor, 1 / scaleFactor)
-      sprite.anchor.set(0.5, 0.5)
-      const size = sprite.width / 2
-
-      let point = hexToPoint({ q: 0, r: 1 })
-      sprite.x = app.renderer.width / 2 + point.x * size
-      sprite.y = app.renderer.height / 2 + point.y * size
-
-      app.stage.addChild(sprite)
-    })
-    Assets.load('/img/systems/38.png').then((texture) => {
-      const sprite = new Sprite(texture)
-      sprite.scale.set(1 / scaleFactor, 1 / scaleFactor)
-      sprite.anchor.set(0.5, 0.5)
-      const size = sprite.width / 2
-
-      let point = hexToPoint({ q: 1, r: 0 })
-      sprite.x = app.renderer.width / 2 + point.x * size
-      sprite.y = app.renderer.height / 2 + point.y * size
-
-      app.stage.addChild(sprite)
-    })
+    window.addEventListener('wheel', handleWheelEvent)
+  },
+  unmounted() {
+    window.removeEventListener('wheel', handleWheelEvent)
   },
   data: () => ({
     canvas: null as CanvasRenderingContext2D | null,
   }),
-  methods: {
-    drawHex() {},
-  },
+  methods: {},
 })
 </script>
 

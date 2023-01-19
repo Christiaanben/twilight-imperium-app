@@ -1,35 +1,68 @@
 <template>
-  <v-navigation-drawer width="120">
-    <v-list-item to="/"><v-img src="/icon.jpg" width="48" /></v-list-item>
-    <v-list-item to="/setup"> Setup</v-list-item>
-    <v-list-item to="/board"> Board</v-list-item>
-    <v-list-item
-      href="https://images-cdn.fantasyflightgames.com/filer_public/f3/c6/f3c66512-8e19-4f30-a0d4-d7d75701fd37/ti-k0289_learn_to_playcompressed.pdf"
-    >
-      Learn
-    </v-list-item>
-    <v-list-item href="https://youtube.com"> Watch</v-list-item>
-    <v-list-item href="https://discord.com/"> Social</v-list-item>
-    <v-list-item>
-      <v-btn color="primary" to="/sign_up"> Sign Up </v-btn>
-    </v-list-item>
-    <v-list-item>
-      <v-btn color="primary" to="/sign_in"> Sign Up </v-btn>
-    </v-list-item>
+  <v-navigation-drawer class="pa-4" rail-width="90" permanent expand-on-hover rail image="/img/space.webp" theme="dark">
+    <v-list>
+      <v-list-item prepend-icon="mdi-controller" to="/">Join Game</v-list-item>
+      <v-list-item prepend-icon="mdi-pencil" to="/setup">Create Lobby</v-list-item>
+      <v-list-item prepend-icon="mdi-view-dashboard" to="/board/123">Board</v-list-item>
+      <v-list-item
+        prepend-icon="mdi-school"
+        href="https://images-cdn.fantasyflightgames.com/filer_public/f3/c6/f3c66512-8e19-4f30-a0d4-d7d75701fd37/ti-k0289_learn_to_playcompressed.pdf"
+      >
+        Learn
+      </v-list-item>
+      <v-list-item prepend-icon="mdi-television-classic" href="https://youtube.com"> Watch</v-list-item>
+      <v-list-item prepend-icon="mdi-chat" href="https://discord.com/"> Social</v-list-item>
+    </v-list>
     <template v-slot:append>
-      <v-list-item>English</v-list-item>
-      <v-list-item>Dark UI</v-list-item>
-      <v-list-item>Help</v-list-item>
+      <div class="showOnHover hidden">
+        <v-divider></v-divider>
+        <v-list-item class="justify-center pt-3">
+          <sign-in-dialog />
+        </v-list-item>
+        <v-list-item class="justify-center">English</v-list-item>
+        <v-list-item class="justify-center">Help</v-list-item>
+        <v-list-item class="justify-center"
+          ><v-switch v-model="isLightMode" :label="isLightMode ? 'Light' : 'Dark'" color="primary"></v-switch
+        ></v-list-item>
+      </div>
     </template>
   </v-navigation-drawer>
 </template>
 
 <script lang="ts">
 import SignInDialog from '../dialogs/SignInDialog.vue'
-export default {
+import { useTheme } from 'vuetify'
+import { defineComponent } from '@vue/runtime-core'
+
+export default defineComponent({
   name: 'TheNavigationDrawer',
-  components: {SignInDialog},
-}
+  data: () => ({}),
+  components: { SignInDialog },
+  setup() {
+    const theme = useTheme()
+    return {
+      theme,
+    }
+  },
+  computed: {
+    isLightMode: {
+      get() {
+        return this.theme.global.name.value == 'light'
+      },
+      set(value: boolean) {
+        this.theme.global.name.value = value ? 'light' : 'dark'
+      },
+    },
+  },
+})
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-navigation-drawer--is-hovering .showOnHover {
+  display: block !important;
+}
+
+.hidden {
+  display: none;
+}
+</style>

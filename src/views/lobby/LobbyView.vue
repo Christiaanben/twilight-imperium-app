@@ -7,13 +7,13 @@
         <v-col cols="8">
           <v-select
             v-model="player.faction"
+            :disabled="isDisabled(player)"
             :items="getAvailableFactions()"
             label="Faction"
-            :disabled="isDisabled(player)"
           />
         </v-col>
         <v-col cols="4">
-          <v-select v-model="player.color" :items="getAvailableColors()" label="Color" :disabled="isDisabled(player)" />
+          <v-select v-model="player.color" :disabled="isDisabled(player)" :items="getAvailableColors()" label="Color" />
         </v-col>
       </v-row>
     </v-list-item>
@@ -43,7 +43,6 @@ export default defineComponent({
     }
   },
   data: () => ({
-    isReady: false,
     MAX_PLAYER: 6,
   }),
   async mounted() {
@@ -61,6 +60,19 @@ export default defineComponent({
     },
     isDisabled(player: Player): boolean {
       return player.user?.id != this.authStore.user.id
+    },
+  },
+  computed: {
+    isReady: {
+      get(): boolean {
+        const player = this.lobbyStore.getPlayer
+        if (player) return player.isReady
+        return false
+      },
+      set(newValue: boolean) {
+        const player = this.lobbyStore.getPlayer
+        if (player) player.isReady = newValue
+      },
     },
   },
 })

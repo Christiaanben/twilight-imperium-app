@@ -7,7 +7,8 @@ export interface PlayerResponse {
   id: number
   user: UserResponse
   color: null
-  race: null
+  faction: Faction
+  is_ready: boolean
 }
 
 export interface PlayerEventInfo {
@@ -18,6 +19,16 @@ export interface LobbyResponse {
   id: string
   name: string
   players: PlayerResponse[]
+}
+
+export interface SystemResponse {
+  id: number
+  q: number
+  r: number
+}
+
+export interface GameResponse {
+  systems: SystemResponse[]
 }
 
 export interface AuthResponse {
