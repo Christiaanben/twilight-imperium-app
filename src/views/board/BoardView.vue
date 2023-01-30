@@ -28,7 +28,7 @@ export default defineComponent({
     app.stage.addChild(container)
 
     this.gameStore.systems.forEach((system) => {
-      Assets.load(`/img/systems/${system.id}.webp`).then((texture) => {
+      Assets.load(`/img/systems/${String(system.id).padStart(2, '0')}.webp`).then((texture) => {
         const sprite = new Sprite(texture)
         sprite.scale.set(1 / scaleFactor, 1 / scaleFactor)
         const size = sprite.width / 2
