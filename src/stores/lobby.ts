@@ -14,7 +14,7 @@ export const useLobbyStore = defineStore('lobby', {
   }),
   getters: {
     getPlayer(): Player | null {
-      return this.lobby?.players.find((p) => p.user?.id == useAuthStore().user.id) || null
+      return this.lobby?.players.find((p) => p.user?.id == useAuthStore().account?.id) || null
     },
   },
   actions: {

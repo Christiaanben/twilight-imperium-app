@@ -1,6 +1,9 @@
+import {Faction} from "../../interfaces/faction";
+
 export interface UserResponse {
   id: string
   email: string
+  display_name: string
 }
 
 export interface PlayerResponse {
@@ -32,7 +35,5 @@ export interface GameResponse {
 }
 
 export interface AuthResponse {
-  token: string
-  display_name: string
-  email: string
+  key: string
 }

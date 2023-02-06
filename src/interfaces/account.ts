@@ -1,7 +1,5 @@
-import {Player} from "../models/player";
-
 export interface Account {
-    token: string
+    id: string,
     displayName: string
     email: string
 

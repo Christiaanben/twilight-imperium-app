@@ -8,38 +8,58 @@ import {accountFactory} from "../services/web-service/factories";
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         account: null as Account | null,
+        //ToDO Error handles
+        errors: {
+            email: '',
+            password: '',
+        },
+        token: null as string | null,
     }),
     actions: {
 
-        async register(userName: string,
+        async register(displayName: string,
                        email: string,
-                       password: string) {
+                       password: string): Promise<boolean>{
             const data: Register = {
-                display_name: userName,
+                display_name: displayName,
                 email: email,
                 password: password,
             }
-            await webService.registerAccount(data).then((response) => {
-                if (response.status <= 300) {
-                    this.account = accountFactory(response.data)
-                }
-                return response
+            return webService.registerAccount(data).then((response) => {
+                this.token = response.data.key
+                return true
+            }).catch(reason => {
+                console.error(reason)
+                return false
             })
         },
 
-        async signIn(email: string, password: string) {
+        async signIn(email: string, password: string): Promise<boolean>{
             const data: SignIn = {
                 email: email,
                 password: password,
             }
-            await webService.signInAccount(data).then((response) => {
-                console.log(response)
-                if (response.status <= 300) {
-                    this.account = accountFactory(response.data)
-                }
-                return response
+            return webService.signInAccount(data).then((response) => {
+                this.token = response.data.key
+                return true
+            }).catch(reason => {
+                console.log(reason)
+                return false
             })
         },
+
+        hydrateUser(): Promise<boolean>{
+            if(this.token !== null){
+                return webService.getUser(this.token).then((response) => {
+                    this.account = accountFactory(response.data)
+                    return true
+                }).catch(reason => {
+                    console.error(reason)
+                    return false
+                })
+            }
+            return new Promise(resolve => resolve(false))
+        }
 
     },
     persist: true,

@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios'
 import { NEW_GAME, NEW_PLAYER, UPDATE_PLAYER } from './web-service/constants'
 import { useLobbyStore } from '../stores/lobby'
 import { Lobby } from '../models/lobby'
-import type {GameResponse, LobbyResponse, AuthResponse} from './web-service/interfaces'
+import type {GameResponse, LobbyResponse, AuthResponse, UserResponse} from './web-service/interfaces'
 import { Player } from '../models/player'
 import { useAuthStore } from '../stores/auth'
 import {Register} from "../interfaces/register";
@@ -24,14 +24,16 @@ export function createLobby(lobbyName: string): Promise<Record<string, string>> 
 }
 
 export function registerAccount(data: Register): Promise<AxiosResponse<AuthResponse>> {
-  console.log(data)
-  return axiosClient.post("/dj-rest-auth/registration/", data)
+  return axiosClient.post("/account/registration/", data)
 }
 
 
 export function signInAccount(data: SignIn): Promise<AxiosResponse<AuthResponse>> {
-  console.log(data)
-  return axiosClient.post("/dj-rest-auth/login/", data)
+  return axiosClient.post("/account/login/", data)
+}
+
+export function getUser(token: string): Promise<AxiosResponse<UserResponse>> {
+  return axiosClient.get("/account/user/", {headers: {'Authorization': `Token ${token}`}})
 }
 
 export function fetchLobby(lobbyId: string): Promise<Lobby> {

@@ -2,9 +2,9 @@
   <h1 >Twilight Imperium Sign Up</h1>
   <h2>Please add the following details: </h2>
   <form>
-    <label>User name:</label>
-    <v-text-field v-model="userName" @blur="vuelidate.userName.$touch"></v-text-field>
-    <div v-if="vuelidate.userName.$error">Please add a user name.</div><br>
+    <label>Display Name:</label>
+    <v-text-field v-model="displayName" @blur="vuelidate.displayName.$touch"></v-text-field>
+    <div v-if="vuelidate.displayName.$error">Please add a valid display name.</div><br>
 
     <label>Email:</label>
     <v-text-field v-model="email" @blur="vuelidate.email.$touch"></v-text-field>
@@ -24,7 +24,7 @@
 import { defineComponent } from 'vue'
 import {useAuthStore} from "@/stores/auth";
 import { useVuelidate } from '@vuelidate/core'
-import { required, email, minLength, helpers } from '@vuelidate/validators'
+import { required, email} from '@vuelidate/validators'
 
 export default defineComponent({
   name: "SignUpView",
@@ -36,22 +36,35 @@ export default defineComponent({
     }
   },
   data: () => ({
-    userName: '',
+    displayName: '',
     email: '',
     password: '',
   }),
   methods: {
     async registerAccount() {
       if (await this.vuelidate.$validate()){
-        const response = await this.authStore.register(this.userName, this.email, this.password)
+        //ToDo add loader.
+        const registerSuccess = await this.authStore.register(this.displayName, this.email, this.password)
+        let userSuccess = false
+        if(registerSuccess){
+            userSuccess = await this.authStore.hydrateUser()
+        }
+
+        //ToDo disable loader
+        if(registerSuccess && userSuccess){
+          this.$router.push({ path: '/'})
+        }
+        else{
+          //ToDO Add error message and response
+        }
       }
     },
   },
   validations () {
     return {
-      userName: {},
-      email: { required, email,},
-      password: { required,}
+      displayName: {required},
+      email: {required, email,},
+      password: {required,}
     }
   }
 })

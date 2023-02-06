@@ -17,7 +17,10 @@
       <div class="showOnHover hidden">
         <v-divider></v-divider>
         <v-list-item class="justify-center pt-3">
-          <sign-in-dialog />
+          <v-btn variant="outlined" to="/sign_up"> Sign Up </v-btn>
+        </v-list-item>
+        <v-list-item class="justify-center pt-3">
+          <v-btn variant="outlined" to="/sign_in"> Sign In </v-btn>
         </v-list-item>
         <v-list-item class="justify-center">English</v-list-item>
         <v-list-item class="justify-center">Help</v-list-item>
@@ -30,14 +33,13 @@
 </template>
 
 <script lang="ts">
-import SignInDialog from '../dialogs/SignInDialog.vue'
 import { useTheme } from 'vuetify'
 import { defineComponent } from '@vue/runtime-core'
 
 export default defineComponent({
   name: 'TheNavigationDrawer',
   data: () => ({}),
-  components: { SignInDialog },
+  components: {},
   setup() {
     const theme = useTheme()
     return {
