@@ -6,6 +6,14 @@
   <h3>Enter game ID</h3>
   <v-text-field label="Lobby ID" v-model="lobbyId" />
   <v-btn @click="connect">Connect</v-btn>
+  <br />
+  <v-overlay width="100vw">
+    <template v-slot:activator="{ isActive, props }">
+      <v-btn class="ma-2" v-bind="props">Strategy Cards</v-btn>
+    </template>
+    <v-img src="/img/strategy/2-diplomacy.png" width="300px" />
+  </v-overlay>
+
   <v-overlay width="100vw">
     <template v-slot:activator="{ isActive, props }">
       <victory-point-tracker v-bind="props" />
