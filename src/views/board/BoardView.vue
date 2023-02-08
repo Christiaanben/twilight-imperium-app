@@ -1,5 +1,6 @@
 <template>
-  <div id="pixiCanvas" ref="pixi"></div>
+  <strategy-selection-overlay v-model="strategySelection" />
+  <div id="pixiCanvas" ref="pixi" />
 </template>
 
 <script lang="ts">
@@ -8,9 +9,11 @@ import { Assets, Container, Sprite } from 'pixi.js'
 import { hexToPoint } from '../../services/hex-service'
 import { app, handleWheelEvent } from '../../services/graphics-service'
 import { useGameStore } from '../../stores/game'
+import StrategySelectionOverlay from '../../components/overlays/StrategySelectionOverlay.vue'
 
 export default defineComponent({
   name: 'BoardView',
+  components: { StrategySelectionOverlay },
   setup() {
     const gameStore = useGameStore()
     return {
@@ -58,6 +61,7 @@ export default defineComponent({
   data: () => ({
     canvas: null as CanvasRenderingContext2D | null,
     mouseDown: false,
+    strategySelection: false,
   }),
   methods: {
     handleMouseEvent(event: MouseEvent) {
