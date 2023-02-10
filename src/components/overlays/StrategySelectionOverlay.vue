@@ -5,9 +5,20 @@
 
   <v-overlay :model-value="showOverlay" width="100vw">
     <v-row class="pa-2 px-16">
-      <v-col v-for="i in 8" class="py-6 d-flex flex-column px-2" cols="3">
-        <v-img :src="`/img/strategy/${i}.png`" height="40vh" width="25vw" />
-        <v-btn class="my-2 mx-14" color="primary">Select</v-btn>
+      <v-col v-for="(selection, i) in selections" class="py-6 d-flex flex-column px-2 position-relative" cols="3">
+        <v-img
+          :src="selection === null ? `/img/strategy/${i + 1}.png` : `/img/strategy/${i + 1}-back.png`"
+          height="40vh"
+          width="25vw"
+        />
+        <div
+          class="d-flex justify-space-around position-absolute flex-column"
+          style="right: 0; left: 0; bottom: 0; top: 0"
+        >
+          <v-sheet v-if="selection" class="pa-2 rounded mx-auto">{{ selection }}</v-sheet>
+        </div>
+
+        <v-btn class="my-2 mx-14" color="primary" :disabled="selection !== null">Select</v-btn>
       </v-col>
     </v-row>
   </v-overlay>
@@ -24,6 +35,9 @@ export default defineComponent({
       default: false,
     },
   },
+  data: () => ({
+    selections: [null, 'Fediration of Sol', null, null, null, null, null, null],
+  }),
   computed: {
     showOverlay: {
       get(): boolean {
