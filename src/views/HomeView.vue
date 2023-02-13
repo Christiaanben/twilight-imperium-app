@@ -9,12 +9,21 @@
   <br />
   <strategy-selection-overlay />
 
+  <flip-card class="ma-2" style="width: 24vw; height: 42vh">
+    <template v-slot:front>
+      <v-img src="/img/strategy/2.png" />
+    </template>
+    <template v-slot:back>
+      <v-img src="/img/strategy/2-back.png" />
+    </template>
+  </flip-card>
+
   <v-overlay width="100vw">
     <template v-slot:activator="{ isActive, props }">
       <victory-point-tracker v-bind="props" />
     </template>
     <v-row>
-      <v-col cols="2" v-for="i in 5">
+      <v-col cols="2" v-for="_ in 5">
         <ti-card
           type="stage1"
           title="Expand Borders"
@@ -24,7 +33,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="2" v-for="i in 5">
+      <v-col cols="2" v-for="_ in 5">
         <ti-card
           type="stage2"
           title="Galvanize the People"
@@ -93,10 +102,11 @@ import TiCard from '../components/cards/TiCard.vue'
 import HandCards from '../components/cards/HandCards.vue'
 import VictoryPointTracker from '@/components/cards/VictoryPointTracker.vue'
 import StrategySelectionOverlay from '../components/overlays/StrategySelectionOverlay.vue'
+import FlipCard from '../components/cards/FlipCard.vue'
 
 export default defineComponent({
   name: 'HomeView',
-  components: { StrategySelectionOverlay, TiCard, VictoryPointTracker, HandCards },
+  components: { FlipCard, StrategySelectionOverlay, TiCard, VictoryPointTracker, HandCards },
   setup() {
     const lobbyStore = useLobbyStore()
     return {
