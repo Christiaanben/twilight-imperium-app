@@ -1,6 +1,6 @@
 <template>
   <div class="flip-card">
-    <div class="flip-card-inner">
+    <div class="flip-card-inner" :class="{ flipped: flipped }">
       <div class="flip-card-front">
         <slot name="front" />
       </div>
@@ -15,6 +15,12 @@
 // code found at: https://www.w3schools.com/howto/howto_css_flip_card.asp
 export default {
   name: 'FlipCard',
+  props: {
+    flipped: {
+      type: Boolean,
+      default: false,
+    },
+  },
 }
 </script>
 
@@ -37,8 +43,8 @@ export default {
   transform-style: preserve-3d;
 }
 
-/* Do an horizontal flip when you move the mouse over the flip box container */
-.flip-card:hover .flip-card-inner {
+/* Do an horizontal flip when it has this class */
+.flipped {
   transform: rotateY(180deg);
 }
 
@@ -52,14 +58,8 @@ export default {
   backface-visibility: hidden;
 }
 
-/* Style the front side (fallback if image is missing) */
-.flip-card-front {
-  color: black;
-}
-
 /* Style the back side */
 .flip-card-back {
-  color: white;
   transform: rotateY(180deg);
 }
 </style>
