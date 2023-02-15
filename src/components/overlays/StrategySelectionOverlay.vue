@@ -1,6 +1,12 @@
 <template>
-  <v-btn color="secondary" class="mx-4 my-auto view-board over-overlay" @click="showOverlay = !showOverlay">
-    Toggle Board
+  <v-btn
+    class="mx-4 my-auto view-board over-overlay"
+    color="secondary"
+    icon
+    size="large"
+    @click="showOverlay = !showOverlay"
+  >
+    <v-icon size="large">{{ showOverlay ? 'mdi-eye' : 'mdi-eye-off' }}</v-icon>
   </v-btn>
 
   <v-overlay :model-value="showOverlay" width="100vw">
@@ -8,10 +14,10 @@
       <v-col v-for="(selection, i) in selections" class="py-6 d-flex flex-column px-2 position-relative" cols="3">
         <flip-card :flipped="selection !== null" style="width: 25vw; height: 40vh">
           <template v-slot:front>
-            <v-img :src="`/img/strategy/${i + 1}.png`" />
+            <v-img :src="`/img/strategy/${i + 1}-front.webp`" />
           </template>
           <template v-slot:back>
-            <v-img :src="`/img/strategy/${i + 1}-back.png`" />
+            <v-img :src="`/img/strategy/${i + 1}-back.webp`" />
           </template>
         </flip-card>
         <div
@@ -21,7 +27,7 @@
           <v-sheet v-if="selection" class="pa-2 rounded mx-auto">{{ selection }}</v-sheet>
         </div>
 
-        <v-btn class="my-2 mx-14" color="primary" :disabled="selection !== null" @click="select(i)">Select</v-btn>
+        <v-btn :disabled="selection !== null" class="my-2 mx-14" color="primary" @click="select(i)">Select</v-btn>
       </v-col>
     </v-row>
   </v-overlay>
