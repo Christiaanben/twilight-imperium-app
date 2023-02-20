@@ -11,7 +11,9 @@ export const useGameStore = defineStore('game', {
   }),
   actions: {
     async hydrateGame(gameId: string) {
-      this.systems = await fetchGame(gameId)
+      let { systems, phase } = await fetchGame(gameId)
+      this.systems = systems
+      this.phase = phase
     },
     switchToGame(gameId: string) {
       router.push({ name: 'game', params: { id: gameId } })

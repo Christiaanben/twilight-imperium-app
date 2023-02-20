@@ -1,4 +1,5 @@
 import type { Faction } from '../../interfaces/faction'
+import { Phase } from '../../interfaces/phase'
 
 export interface UserResponse {
   id: string
@@ -31,4 +32,5 @@ export interface SystemResponse {
 
 export interface GameResponse {
   systems: SystemResponse[]
+  phase: Phase
 }

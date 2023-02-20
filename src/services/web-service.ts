@@ -56,6 +56,7 @@ export function updatePlayer(player: Player) {
 
 export function fetchGame(gameId: string) {
   return axiosClient.get(`/api/games/${gameId}/`).then((response: AxiosResponse<GameResponse>) => {
-    return response.data.systems.map((systemResponse) => System.fromJson(systemResponse))
+    const systems = response.data.systems.map((systemResponse) => System.fromJson(systemResponse))
+    return { systems, phase: response.data.phase }
   })
 }
