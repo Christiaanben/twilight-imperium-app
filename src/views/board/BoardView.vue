@@ -1,5 +1,5 @@
 <template>
-  <strategy-selection-overlay v-model="strategySelection" />
+  <strategy-selection-overlay v-model="strategySelection" v-if="gameStore.phase === 'strategy'" />
   <div id="pixiCanvas" ref="pixi" />
 </template>
 
