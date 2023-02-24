@@ -36,10 +36,18 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import FlipCard from '../cards/FlipCard.vue'
+import { useGameStore } from '../../stores/game'
+import { STRATEGIES } from '../../interfaces/strategy'
 
 export default defineComponent({
   name: 'StrategySelectionOverlay',
   components: { FlipCard },
+  setup() {
+    const gameStore = useGameStore()
+    return {
+      gameStore,
+    }
+  },
   props: {
     modelValue: {
       type: Boolean,
@@ -52,6 +60,7 @@ export default defineComponent({
   methods: {
     select(i: number) {
       this.selections[i] = 'Fediration of Sol'
+      this.gameStore.selectStrategy(STRATEGIES[i])
     },
   },
   computed: {

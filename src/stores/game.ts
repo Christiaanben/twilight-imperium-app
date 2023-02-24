@@ -3,6 +3,8 @@ import { System } from '../models/system'
 import router from '../plugins/router'
 import { fetchGame } from '../services/web-service'
 import type { Phase } from '../interfaces/phase'
+import type { Strategy } from '../interfaces/strategy'
+import * as webService from '../services/web-service/index'
 
 export const useGameStore = defineStore('game', {
   state: () => ({
@@ -17,6 +19,10 @@ export const useGameStore = defineStore('game', {
     },
     switchToGame(gameId: string) {
       router.push({ name: 'game', params: { id: gameId } })
+    },
+    selectStrategy(strategy: Strategy) {
+      console.debug(`gameStore.selectStrategy strategy:${strategy}`)
+      webService.selectStrategy(strategy)
     },
   },
 })

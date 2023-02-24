@@ -10,6 +10,7 @@ import { hexToPoint } from '../../services/hex-service'
 import { app, handleWheelEvent } from '../../services/graphics-service'
 import { useGameStore } from '../../stores/game'
 import StrategySelectionOverlay from '../../components/overlays/StrategySelectionOverlay.vue'
+import * as webService from '../../services/web-service/index'
 
 export default defineComponent({
   name: 'BoardView',
@@ -22,6 +23,8 @@ export default defineComponent({
   },
   async mounted() {
     await this.gameStore.hydrateGame(this.$route.params.id as string)
+    await webService.connectToGame(this.$route.params.id as string)
+
     const pixiDiv = this.$refs.pixi as HTMLDivElement
     const pixiCanvas = app.view as HTMLCanvasElement
     pixiDiv.appendChild(pixiCanvas)
