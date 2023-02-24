@@ -1,21 +1,21 @@
 <template>
   <h1 >Twilight Imperium Sign Up</h1>
   <h2>Please add the following details: </h2>
-  <form>
-    <label>Display Name:</label>
-    <v-text-field v-model="displayName" @blur="vuelidate.displayName.$touch"></v-text-field>
+  <form data-cy="formSignUp">
+    <label data-cy="labelDisplayName">Display Name:</label>
+    <v-text-field data-cy="textFieldDisplayName" v-model="displayName" @blur="vuelidate.displayName.$touch"></v-text-field>
     <div v-if="vuelidate.displayName.$error">Please add a valid display name.</div><br>
 
-    <label>Email:</label>
-    <v-text-field v-model="email" @blur="vuelidate.email.$touch"></v-text-field>
+    <label data-cy="labelEmail">Email:</label>
+    <v-text-field data-cy="textEmail" v-model="email" @blur="vuelidate.email.$touch"></v-text-field>
     <div v-if="vuelidate.email.$error">Please add a valid email.</div><br>
 
-    <label>Password:</label>
-    <v-text-field v-model="password" @blur="vuelidate.password.$touch"></v-text-field>
+    <label data-cy="labelPassword">Password:</label>
+    <v-text-field data-cy="textPassword" v-model="password" @blur="vuelidate.password.$touch"></v-text-field>
     <div v-if="vuelidate.password.$error">Please add a valid password</div><br>
 
 
-    <v-btn @click="registerAccount" > Submit</v-btn>
+    <v-btn data-cy="buttonSubmit" @click="registerAccount" > Submit</v-btn>
   </form>
 </template>
 
@@ -56,6 +56,7 @@ export default defineComponent({
         }
         else{
           //ToDO Add error message and response
+          console.log(this.authStore.error_message.message)
         }
       }
     },

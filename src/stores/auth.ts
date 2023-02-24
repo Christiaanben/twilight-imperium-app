@@ -4,15 +4,12 @@ import type {Register} from '../interfaces/register'
 import type {Account} from "../interfaces/account";
 import {SignIn} from "../interfaces/sign-in";
 import {accountFactory} from "../services/web-service/factories";
+import {integer} from "@vuelidate/validators";
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         account: null as Account | null,
-        //ToDO Error handles
-        errors: {
-            email: '',
-            password: '',
-        },
+        error_message: {status: null, message: ''},
         token: null as string | null,
     }),
     actions: {
@@ -29,6 +26,8 @@ export const useAuthStore = defineStore('auth', {
                 this.token = response.data.key
                 return true
             }).catch(reason => {
+                this.error_message.message = reason.message
+                this.error_message.status = reason.status
                 console.error(reason)
                 return false
             })
@@ -43,6 +42,11 @@ export const useAuthStore = defineStore('auth', {
                 this.token = response.data.key
                 return true
             }).catch(reason => {
+                if(reason.response.status < 500){
+                    this.error_message.message = "Invalid username or password."
+                }else {
+                    this.error_message.message = "Something went wrong. Monkey is working on it."
+                }
                 console.log(reason)
                 return false
             })
@@ -54,6 +58,8 @@ export const useAuthStore = defineStore('auth', {
                     this.account = accountFactory(response.data)
                     return true
                 }).catch(reason => {
+                    this.error_message.message = reason.message
+                    this.error_message.status = reason.status
                     console.error(reason)
                     return false
                 })
