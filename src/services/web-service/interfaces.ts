@@ -4,6 +4,7 @@ import { Phase } from '../../interfaces/phase'
 export interface UserResponse {
   id: string
   email: string
+  display_name: string
 }
 
 export interface PlayerResponse {
@@ -33,4 +34,8 @@ export interface SystemResponse {
 export interface GameResponse {
   systems: SystemResponse[]
   phase: Phase
+}
+
+export interface AuthResponse {
+  key: string
 }

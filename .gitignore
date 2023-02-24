@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Cypress
+cypress/e2e/1-getting-started/*
+cypress/e2e/2-advanced-examples/*
+/cypress/fixtures/example.json
+/cypress/support/commands.ts
+/cypress/videos/spec.cy.ts.mp4

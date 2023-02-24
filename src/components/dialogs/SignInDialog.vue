@@ -9,7 +9,9 @@
         <v-text-field v-model="authStore.token" />
         <v-spacer />
         <v-label>USER ID:</v-label>
-        <v-text-field v-model="authStore.user.id" />
+        <v-text-field v-model="authStore.account?.id" />
+        <v-label>USER Name:</v-label>
+        <v-text-field v-model="authStore.account?.displayName" />
       </v-card-text>
       <v-card-actions>
         <v-btn color="primary" block @click="dialog = false">Close Dialog</v-btn>

@@ -1,13 +1,12 @@
 <template>
-  <the-navigation-drawer />
-  <v-main>
-    <slot />
-  </v-main>
+  <v-app>
+    <the-navigation-drawer />
+    <v-main><slot /></v-main>
+  </v-app>
 </template>
 
 <script lang="ts">
 import TheNavigationDrawer from '@/components/layout/TheNavigationDrawer.vue'
-
 export default {
   name: 'TheLayout',
   components: { TheNavigationDrawer },
