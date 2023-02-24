@@ -4,7 +4,6 @@ import type {Register} from '../interfaces/register'
 import type {Account} from "../interfaces/account";
 import {SignIn} from "../interfaces/sign-in";
 import {accountFactory} from "../services/web-service/factories";
-import {integer} from "@vuelidate/validators";
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
@@ -47,7 +46,7 @@ export const useAuthStore = defineStore('auth', {
                 }else {
                     this.error_message.message = "Something went wrong. Monkey is working on it."
                 }
-                console.log(reason)
+                console.error(reason)
                 return false
             })
         },

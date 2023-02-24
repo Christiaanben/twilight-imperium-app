@@ -15,10 +15,10 @@
   </form>
 </template>
 
-<script>
+<script lang="ts">
 
 import { defineComponent } from 'vue'
-import {useAuthStore} from "@/stores/auth";
+import {useAuthStore} from "../../stores/auth";
 import { useVuelidate } from '@vuelidate/core'
 import { required, email} from '@vuelidate/validators'
 

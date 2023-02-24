@@ -29,13 +29,17 @@ context('Sign In', () => {
 
         cy.get('[data-cy="buttonSubmit"]').click()
 
+        cy.wait('@userApi')
+
+        cy.location('pathname', {timeout : 1000}).should('not.contain', '/sign_in')
+
     })
 
 
     it('Failed Sign In', () => {
 
         cy.fixture('sign_up_in_failed_mock.json').then((register_mock) => {
-            cy.intercept('POST', '/account/login/', register_mock).as('signUpApi')
+            cy.intercept('POST', '/account/login/', register_mock).as('signInApi')
         })
 
         cy.fixture('get_user_failed_mock.json').then((user_mock) => {
@@ -54,6 +58,10 @@ context('Sign In', () => {
             .type('MockPass@123')
 
         cy.get('[data-cy="buttonSubmit"]').click()
+
+        cy.wait('@signInApi')
+
+        cy.location('pathname', {timeout : 1000}).should('contain', '/sign_in')
 
     })
 

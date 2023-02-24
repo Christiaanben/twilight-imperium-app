@@ -33,6 +33,10 @@ context('Register', () => {
 
     cy.get('[data-cy="buttonSubmit"]').click()
 
+    cy.wait('@userApi')
+
+    cy.location('pathname', {timeout : 1000}).should('not.contain', '/sign_up')
+
   })
 
 
@@ -62,6 +66,10 @@ context('Register', () => {
         .type('MockPass@123')
 
     cy.get('[data-cy="buttonSubmit"]').click()
+
+    cy.wait('@signUpApi')
+
+    cy.location('pathname', {timeout : 1000}).should('contain', '/sign_up')
 
   })
 
