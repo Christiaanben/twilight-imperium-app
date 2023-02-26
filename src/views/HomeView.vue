@@ -9,17 +9,6 @@
   <br />
   <strategy-selection-overlay />
 
-  <flip-card class="ma-2" style="width: 24vw; height: 42vh" :flipped="flipped">
-    <template v-slot:front>
-      <v-img src="/img/strategy/2.png" />
-    </template>
-    <template v-slot:back>
-      <v-img src="/img/strategy/2-back.png" />
-    </template>
-  </flip-card>
-
-  <v-btn @click="flipped = !flipped">Flip</v-btn>
-
   <v-overlay width="100vw">
     <template v-slot:activator="{ isActive, props }">
       <victory-point-tracker v-bind="props" />
@@ -117,7 +106,6 @@ export default defineComponent({
   },
   data: () => ({
     lobbyId: '',
-    flipped: false,
   }),
   methods: {
     async connect() {
