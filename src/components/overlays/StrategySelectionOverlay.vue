@@ -11,7 +11,7 @@
 
   <v-overlay :model-value="showOverlay" width="100vw">
     <v-row class="pa-2 px-16">
-      <v-col v-for="(selection, i) in selections" class="py-6 d-flex flex-column px-2 position-relative" cols="3">
+      <v-col v-for="(selection, i) in strategies" class="py-6 d-flex flex-column px-2 position-relative" cols="3">
         <flip-card :flipped="selection !== null" style="width: 25vw; height: 40vh">
           <template v-slot:front>
             <v-img :src="`/img/strategy/${i + 1}-front.webp`" />
@@ -71,6 +71,13 @@ export default defineComponent({
       set(value: boolean) {
         this.$emit('update:modelValue', value)
       },
+    },
+    strategies() {
+      let strats = [null, null, null, null, null, null, null, null] as (string | null)[]
+      this.gameStore.strategies.forEach((strategy) => {
+        strats[strategy.type] = 'Emirates of Hacan'
+      })
+      return strats
     },
   },
 })

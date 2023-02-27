@@ -9,12 +9,14 @@ import * as webService from '../services/web-service/index'
 export const useGameStore = defineStore('game', {
   state: () => ({
     systems: [] as System[],
+    strategies: [] as any[],
     phase: 'strategy' as Phase,
   }),
   actions: {
     async hydrateGame(gameId: string) {
-      let { systems, phase } = await fetchGame(gameId)
+      let { systems, phase, strategies } = await fetchGame(gameId)
       this.systems = systems
+      this.strategies = strategies
       this.phase = phase
     },
     switchToGame(gameId: string) {

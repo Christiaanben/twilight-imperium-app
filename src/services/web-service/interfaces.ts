@@ -31,8 +31,13 @@ export interface SystemResponse {
   r: number
 }
 
+export interface StrategyResponse {
+  type: number
+}
+
 export interface GameResponse {
   systems: SystemResponse[]
+  strategies: StrategyResponse[]
   phase: Phase
 }
 

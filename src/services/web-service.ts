@@ -3,11 +3,11 @@ import axios, { AxiosResponse } from 'axios'
 import { NEW_GAME, NEW_PLAYER, UPDATE_PLAYER } from './web-service/constants'
 import { useLobbyStore } from '../stores/lobby'
 import { Lobby } from '../models/lobby'
-import type {GameResponse, LobbyResponse, AuthResponse, UserResponse} from './web-service/interfaces'
+import type { GameResponse, LobbyResponse, AuthResponse, UserResponse } from './web-service/interfaces'
 import { Player } from '../models/player'
 import { useAuthStore } from '../stores/auth'
-import {Register} from "../interfaces/register";
-import {SignIn} from "../interfaces/sign-in";
+import { Register } from '../interfaces/register'
+import { SignIn } from '../interfaces/sign-in'
 import { System } from '../models/system'
 import { useGameStore } from '../stores/game'
 
@@ -24,16 +24,15 @@ export function createLobby(lobbyName: string): Promise<Record<string, string>> 
 }
 
 export function registerAccount(data: Register): Promise<AxiosResponse<AuthResponse>> {
-  return axiosClient.post("/account/registration/", data)
+  return axiosClient.post('/account/registration/', data)
 }
 
-
 export function signInAccount(data: SignIn): Promise<AxiosResponse<AuthResponse>> {
-  return axiosClient.post("/account/login/", data)
+  return axiosClient.post('/account/login/', data)
 }
 
 export function getUser(token: string): Promise<AxiosResponse<UserResponse>> {
-  return axiosClient.get("/account/user/", {headers: {'Authorization': `Token ${token}`}})
+  return axiosClient.get('/account/user/', { headers: { Authorization: `Token ${token}` } })
 }
 
 export function fetchLobby(lobbyId: string): Promise<Lobby> {
@@ -72,6 +71,6 @@ export function updatePlayer(player: Player) {
 export function fetchGame(gameId: string) {
   return axiosClient.get(`/api/games/${gameId}/`).then((response: AxiosResponse<GameResponse>) => {
     const systems = response.data.systems.map((systemResponse) => System.fromJson(systemResponse))
-    return { systems, phase: response.data.phase }
+    return { systems, phase: response.data.phase, strategies: response.data.strategies }
   })
 }
