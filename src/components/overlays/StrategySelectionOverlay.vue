@@ -75,7 +75,7 @@ export default defineComponent({
     strategies() {
       let strats = [null, null, null, null, null, null, null, null] as (string | null)[]
       this.gameStore.strategies.forEach((strategy) => {
-        strats[strategy.type - 1] = 'Emirates of Hacan'
+        strats[strategy.initiative - 1] = 'Emirates of Hacan'
       })
       return strats
     },

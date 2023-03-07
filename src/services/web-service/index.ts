@@ -1,7 +1,7 @@
 import { useWebSocket, UseWebSocketReturn } from '@vueuse/core'
 import { useAuthStore } from '../../stores/auth'
 import { Strategy } from '../../interfaces/strategy'
-import { useGameStore } from '../../stores/game'
+import { COMMANDS } from './commands'
 
 let socket: UseWebSocketReturn<any> | null = null
 
@@ -11,15 +11,10 @@ export async function connectToGame(gameId: string) {
     onMessage(ws, event) {
       const data = JSON.parse(event.data)
       console.debug(`[websocket][event:${data.type}]`, data)
-      switch (data.type) {
-        case 'select_strategy':
-          let replaced = false
-          useGameStore().strategies.map((strategy) => {
-            if (data.kwargs.type === strategy.type) replaced = true
-            return strategy
-          })
-          if (!replaced) useGameStore().strategies.push(data.kwargs)
-      }
+      let command_class = COMMANDS[data.type]
+      let command = new command_class(data.kwargs)
+      console.debug('[command]', command)
+      command.execute()
     },
   })
 }
