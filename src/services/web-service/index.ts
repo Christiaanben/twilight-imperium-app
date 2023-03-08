@@ -1,6 +1,6 @@
 import { useWebSocket, UseWebSocketReturn } from '@vueuse/core'
 import { useAuthStore } from '../../stores/auth'
-import { Strategy } from '../../interfaces/strategy'
+import { StrategyType } from '../../interfaces/strategy-type'
 import { COMMANDS } from './commands'
 
 let socket: UseWebSocketReturn<any> | null = null
@@ -19,7 +19,7 @@ export async function connectToGame(gameId: string) {
   })
 }
 
-export function selectStrategy(strategy: Strategy) {
+export function selectStrategy(strategy: StrategyType) {
   socket?.send(
     JSON.stringify({
       type: 'select_strategy',

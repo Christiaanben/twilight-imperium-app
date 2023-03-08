@@ -1,4 +1,4 @@
-export const STRATEGIES = [
+export const STRATEGY_TYPES = [
   'leadership',
   'diplomacy',
   'politics',
@@ -8,4 +8,4 @@ export const STRATEGIES = [
   'technology',
   'imperial',
 ] as const
-export type Strategy = typeof STRATEGIES[number]
+export type StrategyType = typeof STRATEGY_TYPES[number]

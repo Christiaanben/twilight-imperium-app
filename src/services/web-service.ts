@@ -10,6 +10,8 @@ import { Register } from '../interfaces/register'
 import { SignIn } from '../interfaces/sign-in'
 import { System } from '../models/system'
 import { useGameStore } from '../stores/game'
+import { Game } from '../interfaces/game'
+import { Strategy } from '../models/strategy'
 
 const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_WEB_URL,
@@ -68,9 +70,11 @@ export function updatePlayer(player: Player) {
   )
 }
 
-export function fetchGame(gameId: string) {
+export function fetchGame(gameId: string): Promise<Game> {
   return axiosClient.get(`/api/games/${gameId}/`).then((response: AxiosResponse<GameResponse>) => {
     const systems = response.data.systems.map((systemResponse) => System.fromJson(systemResponse))
-    return { systems, phase: response.data.phase, strategies: response.data.strategies }
+    const strategies = response.data.strategies.map((strategyResponse) => Strategy.fromJson(strategyResponse))
+    const players = response.data.players.map((playerResponse) => Player.fromJson(playerResponse))
+    return { systems, phase: response.data.phase, strategies, players }
   })
 }

@@ -1,23 +1,19 @@
 import { useGameStore } from '../../../stores/game'
-import type { Strategy } from '../../../interfaces/strategy'
+import type { StrategyResponse } from '../interfaces'
+import { Strategy } from '../../../models/strategy'
 
 export class SelectStrategyCommand {
-  private readonly type: string
-  private readonly initiative: number
+  private readonly strategy: Strategy
 
-  constructor({ type = 'leadership' as Strategy, initiative = 0 } = {}) {
-    this.type = type
-    this.initiative = initiative
+  constructor(strategyResponse: StrategyResponse) {
+    this.strategy = Strategy.fromJson(strategyResponse)
   }
 
   execute(): void {
-    let gameStore = useGameStore()
+    const gameStore = useGameStore()
     gameStore.strategies = [
-      ...gameStore.strategies.filter((strategy) => strategy.type !== this.type),
-      {
-        type: this.type,
-        initiative: this.initiative,
-      },
+      ...gameStore.strategies.filter((strategy) => strategy.initiative !== this.strategy.initiative),
+      this.strategy,
     ]
   }
 }

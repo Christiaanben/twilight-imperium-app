@@ -1,5 +1,6 @@
 import type { Faction } from '../../interfaces/faction'
 import { Phase } from '../../interfaces/phase'
+import { StrategyType } from '../../interfaces/strategy-type'
 
 export interface UserResponse {
   id: string
@@ -32,12 +33,15 @@ export interface SystemResponse {
 }
 
 export interface StrategyResponse {
-  type: number
+  type: StrategyType
+  initiative: number
+  player: number | null
 }
 
 export interface GameResponse {
   systems: SystemResponse[]
   strategies: StrategyResponse[]
+  players: PlayerResponse[]
   phase: Phase
 }
 

@@ -11,8 +11,12 @@
 
   <v-overlay :model-value="showOverlay" width="100vw">
     <v-row class="pa-2 px-16">
-      <v-col v-for="(selection, i) in strategies" class="py-6 d-flex flex-column px-2 position-relative" cols="3">
-        <flip-card :flipped="selection !== null" style="width: 25vw; height: 40vh">
+      <v-col
+        v-for="(strategy, i) in gameStore.getStrategies"
+        class="py-6 d-flex flex-column px-2 position-relative"
+        cols="3"
+      >
+        <flip-card :flipped="strategy.player !== null" style="height: 40vh">
           <template v-slot:front>
             <v-img :src="`/img/strategy/${i + 1}-front.webp`" />
           </template>
@@ -22,12 +26,16 @@
         </flip-card>
         <div
           class="d-flex justify-space-around position-absolute flex-column"
-          style="right: 0; left: 0; bottom: 0; top: 0"
+          style="right: 0; left: 15%; bottom: 0; top: 0"
         >
-          <v-sheet v-if="selection" class="pa-2 rounded mx-auto">{{ selection }}</v-sheet>
+          <v-img
+            v-if="strategy.player"
+            :src="`/img/control-tokens/${strategy.player.faction}.webp`"
+            class="mx-auto"
+            width="35%"
+          />
         </div>
-
-        <v-btn :disabled="selection !== null" class="my-2 mx-14" color="primary" @click="select(i)">Select</v-btn>
+        <v-btn :disabled="strategy.player !== null" class="my-2 mx-14" color="primary" @click="select(i)">Select</v-btn>
       </v-col>
     </v-row>
   </v-overlay>
@@ -37,7 +45,7 @@
 import { defineComponent } from 'vue'
 import FlipCard from '../cards/FlipCard.vue'
 import { useGameStore } from '../../stores/game'
-import { STRATEGIES } from '../../interfaces/strategy'
+import { STRATEGY_TYPES } from '../../interfaces/strategy-type'
 
 export default defineComponent({
   name: 'StrategySelectionOverlay',
@@ -54,13 +62,10 @@ export default defineComponent({
       default: false,
     },
   },
-  data: () => ({
-    selections: [null, null, null, null, null, null, null, null] as (string | null)[],
-  }),
+  data: () => ({}),
   methods: {
     select(i: number) {
-      this.selections[i] = 'Fediration of Sol'
-      this.gameStore.selectStrategy(STRATEGIES[i])
+      this.gameStore.selectStrategy(STRATEGY_TYPES[i])
     },
   },
   computed: {
