@@ -12,7 +12,10 @@ export const app = new Application({
 export function handleWheelEvent(event: WheelEvent) {
   if (event.deltaY !== 0) {
     const delta = event.deltaY / -100
+    const mousePos = { x: event.offsetX, y: event.offsetY }
     zoomLevel = Math.min(Math.max(Math.pow(1.1, -8), zoomLevel * Math.pow(1.1, delta)), Math.pow(1.05, 8))
+    const scaleDiff = 1 / app.stage.scale.x - 1 / zoomLevel
+    app.stage.pivot.set(app.stage.pivot.x + mousePos.x * scaleDiff, app.stage.pivot.y + mousePos.y * scaleDiff)
     app.stage.scale.set(zoomLevel, zoomLevel)
   }
 }
