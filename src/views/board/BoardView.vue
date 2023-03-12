@@ -11,6 +11,7 @@ import { app, handleWheelEvent } from '../../services/graphics-service'
 import { useGameStore } from '../../stores/game'
 import StrategySelectionOverlay from '../../components/overlays/StrategySelectionOverlay.vue'
 import * as webService from '../../services/web-service/index'
+import * as PIXI from 'pixi.js'
 
 export default defineComponent({
   name: 'BoardView',
@@ -48,6 +49,25 @@ export default defineComponent({
 
         // Add the sprite to the scene we are building
         container.addChild(sprite)
+
+        Assets.load(`/img/units/carrier.webp`).then((texture) => {
+          const unitSprite = new Sprite(texture)
+          unitSprite.scale.set(1.5 / scaleFactor, 1.5 / scaleFactor)
+          const colorMatrix = new PIXI.filters.ColorMatrixFilter()
+          const colorMatrix2 = new PIXI.filters.ColorMatrixFilter()
+          colorMatrix.saturate(1, true)
+          colorMatrix2.hue(330, true)
+          unitSprite.filters = [colorMatrix, colorMatrix2]
+
+          unitSprite.x = sprite.x
+          unitSprite.y = sprite.y
+
+          // Rotate around the center
+          unitSprite.anchor.set(0.5, 0.5)
+
+          // Add the sprite to the scene we are building
+          container.addChild(unitSprite)
+        })
       })
     })
 
