@@ -1,25 +1,67 @@
 <template>
-  <h4>Lobby ID: {{ lobbyStore.lobby?.id }}</h4>
-  <v-list>
-    <v-list-item v-for="player in lobbyStore.lobby?.players">
-      <div class="ma-2">Your player: {{ player }}</div>
-      <v-row>
-        <v-col cols="8">
-          <v-select
-            v-model="player.faction"
-            :disabled="isDisabled(player)"
-            :items="getAvailableFactions()"
-            label="Faction"
-          />
-        </v-col>
-        <v-col cols="4">
-          <v-select v-model="player.color" :disabled="isDisabled(player)" :items="getAvailableColors()" label="Color" />
-        </v-col>
-      </v-row>
-    </v-list-item>
-    <v-list-item v-for="_ in MAX_PLAYER - (lobbyStore.lobby?.players || []).length"> -</v-list-item>
-  </v-list>
-  <v-switch v-model="isReady" label="Ready" />
+  <v-card
+    class="d-flex justify-center align-center"
+    density="comfortable"
+    height="100%"
+    image="/img/spacestation.webp"
+    theme="dark"
+  >
+    <v-sheet class="pa-4 overflow-auto" position="fixed" width="65%" height="95%" rounded color="rgb(0, 0, 0, 0.8)">
+      <h1>Lobby ID:</h1>
+      <h3 class="py-4">
+        {{ lobbyStore.lobby?.id }}
+        <v-tooltip :open-on-hover="false" v-model="showClipboardText">
+          <template v-slot:activator="{ props }">
+            <v-btn
+              v-bind="props"
+              class="mx-6"
+              color="grey-darken-1"
+              icon="mdi-content-copy"
+              @click="copyClipboard"
+            ></v-btn>
+          </template>
+          <span>Copied</span>
+        </v-tooltip>
+      </h3>
+      <v-list>
+        <v-list-item v-for="player in lobbyStore.lobby?.players">
+          <v-label>Player: {{ player.user?.display_name }}</v-label>
+          <v-row>
+            <v-col cols="6">
+              <v-select
+                v-model="player.faction"
+                :disabled="isDisabled(player)"
+                :items="getAvailableFactions()"
+                label="Faction"
+              />
+            </v-col>
+            <v-col cols="3">
+              <v-select
+                v-model="player.color"
+                :disabled="isDisabled(player)"
+                :items="getAvailableColors()"
+                label="Color"
+                :bg-color="player.color || 'none'"
+              />
+            </v-col>
+            <v-col cols="3">
+              <!-- Other Players -->
+              <v-checkbox
+                :disabled="isDisabled(player)"
+                v-if="isDisabled(player)"
+                v-model="player._isReady"
+                label="Ready"
+                color="primary"
+                hide-details
+              ></v-checkbox>
+              <!-- Your Player -->
+              <v-checkbox v-else v-model="isReady" label="Ready" color="primary" hide-details></v-checkbox>
+            </v-col>
+          </v-row>
+        </v-list-item>
+      </v-list>
+    </v-sheet>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -43,7 +85,7 @@ export default defineComponent({
     }
   },
   data: () => ({
-    MAX_PLAYER: 6,
+    showClipboardText: false,
   }),
   async mounted() {
     await this.lobbyStore.fetchLobby(this.$route.params.id as string)
@@ -60,6 +102,16 @@ export default defineComponent({
     },
     isDisabled(player: Player): boolean {
       return player.user?.id != this.authStore.account?.id
+    },
+    copyClipboard() {
+      // Get the text field
+      const copyText = this.lobbyStore.lobby?.id || ''
+
+      // Copy the text inside the text field
+      navigator.clipboard.writeText(copyText)
+
+      this.showClipboardText = true
+      setTimeout(() => (this.showClipboardText = false), 1000)
     },
   },
   computed: {
