@@ -1,5 +1,7 @@
 import type { Hex } from '../interfaces/hex'
 import { SystemResponse } from '../services/web-service/interfaces'
+import { Unit } from './unit'
+import { useGameStore } from '../stores/game'
 
 export class System {
   id: number
@@ -14,6 +16,10 @@ export class System {
 
   getHex(): Hex {
     return { q: this.q, r: this.r }
+  }
+
+  get units(): Unit[] {
+    return useGameStore().units.filter((unit) => unit.systemId === this.id)
   }
 
   static fromJson(systemResponse: SystemResponse): System {

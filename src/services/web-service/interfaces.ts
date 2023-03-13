@@ -38,11 +38,16 @@ export interface StrategyResponse {
   player: number | null
 }
 
+export interface UnitResponse {
+  system: number
+}
+
 export interface GameResponse {
   systems: SystemResponse[]
   strategies: StrategyResponse[]
   players: PlayerResponse[]
   phase: Phase
+  units: UnitResponse[]
 }
 
 export interface AuthResponse {

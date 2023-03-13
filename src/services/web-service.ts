@@ -12,6 +12,7 @@ import { System } from '../models/system'
 import { useGameStore } from '../stores/game'
 import { Game } from '../interfaces/game'
 import { Strategy } from '../models/strategy'
+import { Unit } from '../models/unit'
 
 const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_WEB_URL,
@@ -75,6 +76,7 @@ export function fetchGame(gameId: string): Promise<Game> {
     const systems = response.data.systems.map((systemResponse) => System.fromJson(systemResponse))
     const strategies = response.data.strategies.map((strategyResponse) => Strategy.fromJson(strategyResponse))
     const players = response.data.players.map((playerResponse) => Player.fromJson(playerResponse))
-    return { systems, phase: response.data.phase, strategies, players }
+    const units = response.data.units.map((unitResponse) => Unit.fromJson(unitResponse))
+    return { systems, phase: response.data.phase, strategies, players, units }
   })
 }

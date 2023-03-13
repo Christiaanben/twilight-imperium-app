@@ -50,23 +50,25 @@ export default defineComponent({
         // Add the sprite to the scene we are building
         container.addChild(sprite)
 
-        Assets.load(`/img/units/carrier.webp`).then((texture) => {
-          const unitSprite = new Sprite(texture)
-          unitSprite.scale.set(1.5 / scaleFactor, 1.5 / scaleFactor)
-          const colorMatrix = new PIXI.filters.ColorMatrixFilter()
-          const colorMatrix2 = new PIXI.filters.ColorMatrixFilter()
-          colorMatrix.saturate(1, true)
-          colorMatrix2.hue(330, true)
-          unitSprite.filters = [colorMatrix, colorMatrix2]
+        system.units.forEach((unit) => {
+          Assets.load(`/img/units/carrier.webp`).then((texture) => {
+            const unitSprite = new Sprite(texture)
+            unitSprite.scale.set(1.5 / scaleFactor, 1.5 / scaleFactor)
+            const colorMatrix = new PIXI.filters.ColorMatrixFilter()
+            const colorMatrix2 = new PIXI.filters.ColorMatrixFilter()
+            colorMatrix.saturate(1, true)
+            colorMatrix2.hue(330, true)
+            unitSprite.filters = [colorMatrix, colorMatrix2]
 
-          unitSprite.x = sprite.x
-          unitSprite.y = sprite.y
+            unitSprite.x = sprite.x
+            unitSprite.y = sprite.y
 
-          // Rotate around the center
-          unitSprite.anchor.set(0.5, 0.5)
+            // Rotate around the center
+            unitSprite.anchor.set(0.5, 0.5)
 
-          // Add the sprite to the scene we are building
-          container.addChild(unitSprite)
+            // Add the sprite to the scene we are building
+            container.addChild(unitSprite)
+          })
         })
       })
     })

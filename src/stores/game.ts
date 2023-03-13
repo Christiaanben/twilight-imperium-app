@@ -7,6 +7,7 @@ import type { StrategyType } from '../interfaces/strategy-type'
 import * as webService from '../services/web-service/index'
 import { Player } from '../models/player'
 import { Strategy } from '../models/strategy'
+import { Unit } from '../models/unit'
 
 export const useGameStore = defineStore('game', {
   state: () => ({
@@ -14,6 +15,7 @@ export const useGameStore = defineStore('game', {
     strategies: [] as Strategy[],
     players: [] as Player[],
     phase: 'strategy' as Phase,
+    units: [] as Unit[],
   }),
   getters: {
     getStrategies: (state) => {
@@ -27,11 +29,12 @@ export const useGameStore = defineStore('game', {
   },
   actions: {
     async hydrateGame(gameId: string) {
-      let { systems, phase, strategies, players } = await fetchGame(gameId)
+      let { systems, phase, strategies, players, units } = await fetchGame(gameId)
       this.systems = systems
       this.strategies = strategies
       this.phase = phase
       this.players = players
+      this.units = units
     },
     switchToGame(gameId: string) {
       router.push({ name: 'game', params: { id: gameId } })
