@@ -6,17 +6,17 @@
     image="/img/spacestation.webp"
     theme="dark"
   >
-    <v-sheet class="pa-4 overflow-auto" position="fixed" width="65%" height="95%" rounded color="rgb(0, 0, 0, 0.8)">
+    <v-sheet class="pa-4 overflow-auto" color="rgb(0, 0, 0, 0.8)" height="95%" position="fixed" rounded width="65%">
       <h1>Lobby ID:</h1>
       <h3 class="py-4">
         {{ lobbyStore.lobby?.id }}
-        <v-tooltip :open-on-hover="false" v-model="showClipboardText">
+        <v-tooltip v-model="showClipboardText" :open-on-hover="false">
           <template v-slot:activator="{ props }">
             <v-btn
-              v-bind="props"
               class="mx-6"
               color="grey-darken-1"
               icon="mdi-content-copy"
+              v-bind="props"
               @click="copyClipboard"
             ></v-btn>
           </template>
@@ -32,30 +32,32 @@
                 v-model="player.faction"
                 :disabled="isDisabled(player)"
                 :items="getAvailableFactions()"
+                item-title="name"
+                item-value="id"
                 label="Faction"
               />
             </v-col>
             <v-col cols="3">
               <v-select
                 v-model="player.color"
+                :bg-color="player.color || 'none'"
                 :disabled="isDisabled(player)"
                 :items="getAvailableColors()"
                 label="Color"
-                :bg-color="player.color || 'none'"
               />
             </v-col>
             <v-col cols="3">
               <!-- Other Players -->
               <v-checkbox
-                :disabled="isDisabled(player)"
                 v-if="isDisabled(player)"
                 v-model="player._isReady"
-                label="Ready"
+                :disabled="isDisabled(player)"
                 color="primary"
                 hide-details
+                label="Ready"
               ></v-checkbox>
               <!-- Your Player -->
-              <v-checkbox v-else v-model="isReady" label="Ready" color="primary" hide-details></v-checkbox>
+              <v-checkbox v-else v-model="isReady" color="primary" hide-details label="Ready"></v-checkbox>
             </v-col>
           </v-row>
         </v-list-item>
@@ -93,8 +95,10 @@ export default defineComponent({
   },
   methods: {
     getAvailableFactions(): Faction[] {
-      const playerFactions = this.lobbyStore.lobby?.players.map((player) => player.faction) || []
-      return FACTIONS.filter((v) => !playerFactions.includes(v))
+      const playerFactions = this.lobbyStore.lobby?.players.map((player) => player.faction) || ([] as string[])
+      return this.lobbyStore.getFactions.filter((faction: Faction) => {
+        return !playerFactions.includes(faction.id)
+      })
     },
     getAvailableColors(): Color[] {
       const playerColors = this.lobbyStore.lobby?.players.map((player) => player.color) || []

@@ -3,7 +3,13 @@ import axios, { AxiosResponse } from 'axios'
 import { NEW_GAME, NEW_PLAYER, UPDATE_PLAYER } from './web-service/constants'
 import { useLobbyStore } from '../stores/lobby'
 import { Lobby } from '../models/lobby'
-import type { GameResponse, LobbyResponse, AuthResponse, UserResponse } from './web-service/interfaces'
+import type {
+  AuthResponse,
+  FactionListResponse,
+  GameResponse,
+  LobbyResponse,
+  UserResponse,
+} from './web-service/interfaces'
 import { Player } from '../models/player'
 import { useAuthStore } from '../stores/auth'
 import { Register } from '../interfaces/register'
@@ -13,6 +19,7 @@ import { useGameStore } from '../stores/game'
 import { Game } from '../interfaces/game'
 import { Strategy } from '../models/strategy'
 import { Unit } from '../models/unit'
+import { Faction } from '../interfaces/faction'
 
 const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_WEB_URL,
@@ -78,5 +85,11 @@ export function fetchGame(gameId: string): Promise<Game> {
     const players = response.data.players.map((playerResponse) => Player.fromJson(playerResponse))
     const units = response.data.units.map((unitResponse) => Unit.fromJson(unitResponse))
     return { systems, phase: response.data.phase, strategies, players, units }
+  })
+}
+
+export async function fetchFactions(): Promise<Faction[]> {
+  return axiosClient.get('/api/factions/').then((response: AxiosResponse<FactionListResponse>) => {
+    return response.data.results
   })
 }

@@ -1,4 +1,3 @@
-import type { Faction } from '../../interfaces/faction'
 import { Phase } from '../../interfaces/phase'
 import { StrategyType } from '../../interfaces/strategy-type'
 
@@ -12,7 +11,7 @@ export interface PlayerResponse {
   id: number
   user: UserResponse
   color: null
-  faction: Faction
+  faction: string
   is_ready: boolean
 }
 
@@ -52,4 +51,16 @@ export interface GameResponse {
 
 export interface AuthResponse {
   key: string
+}
+
+export interface FactionResponse {
+  id: string
+  name: string
+}
+
+export interface FactionListResponse {
+  count: number
+  next: null
+  previous: null
+  results: FactionResponse[]
 }

@@ -2,19 +2,24 @@ import { defineStore } from 'pinia'
 import * as webService from '../services/web-service'
 import { Lobby } from '../models/lobby'
 import { Player } from '../models/player'
-import { UseWebSocketReturn } from '@vueuse/core'
+import { useAsyncState, UseWebSocketReturn } from '@vueuse/core'
 import { Ref } from 'vue'
 import { PlayerEventInfo } from '../services/web-service/interfaces'
 import { useAuthStore } from './auth'
+import { Faction } from '../interfaces/faction'
 
 export const useLobbyStore = defineStore('lobby', {
   state: () => ({
+    factions: useAsyncState(() => webService.fetchFactions(), []),
     lobby: null as Lobby | null,
     ws: null as Ref<UseWebSocketReturn<any>> | null,
   }),
   getters: {
     getPlayer(): Player | null {
       return this.lobby?.players.find((p) => p.user?.id == useAuthStore().account?.id) || null
+    },
+    getFactions(): Faction[] {
+      return this.factions.state
     },
   },
   actions: {
