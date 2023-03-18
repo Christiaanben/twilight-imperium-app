@@ -35,7 +35,11 @@
                 item-title="name"
                 item-value="id"
                 label="Faction"
-              />
+              >
+                <template v-slot:selection="{ item }">
+                  {{ lobbyStore.getFactions.find((faction) => faction.id === item.value)?.name }}
+                </template>
+              </v-select>
             </v-col>
             <v-col cols="3">
               <v-select
