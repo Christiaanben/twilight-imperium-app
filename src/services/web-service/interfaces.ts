@@ -1,5 +1,6 @@
 import { Phase } from '../../interfaces/phase'
 import { StrategyType } from '../../interfaces/strategy-type'
+import { UnitType } from '../../interfaces/unit-type'
 
 export interface UserResponse {
   id: string
@@ -39,6 +40,7 @@ export interface StrategyResponse {
 
 export interface UnitResponse {
   system: number
+  type: UnitType
 }
 
 export interface GameResponse {

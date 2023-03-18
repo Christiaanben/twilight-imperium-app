@@ -50,8 +50,8 @@ export default defineComponent({
         // Add the sprite to the scene we are building
         container.addChild(sprite)
 
-        system.units.forEach((unit) => {
-          Assets.load(`/img/units/carrier.webp`).then((texture) => {
+        system.units.forEach((unit, idx) => {
+          Assets.load(`/img/units/${unit.type}.webp`).then((texture) => {
             const unitSprite = new Sprite(texture)
             unitSprite.scale.set(1.5 / scaleFactor, 1.5 / scaleFactor)
             const colorMatrix = new PIXI.filters.ColorMatrixFilter()
@@ -60,8 +60,8 @@ export default defineComponent({
             colorMatrix2.hue(330, true)
             unitSprite.filters = [colorMatrix, colorMatrix2]
 
-            unitSprite.x = sprite.x
-            unitSprite.y = sprite.y
+            unitSprite.x = sprite.x + Math.floor(idx / 3) * 40 - 40
+            unitSprite.y = sprite.y + (idx % 3) * 40 - 40
 
             // Rotate around the center
             unitSprite.anchor.set(0.5, 0.5)
