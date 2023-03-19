@@ -5,12 +5,12 @@ import { Color } from '../../interfaces/color'
 let zoomLevel = 1
 const zoomDelta = 1.1
 const colorRGBByColor: Record<Color, number> = {
-  red: 0xff0000,
-  yellow: 0xffff00,
-  green: 0x00ff00,
-  black: 0x333333,
-  blue: 0x0000ff,
-  purple: 0xff00ff,
+  red: 0xdd0000,
+  yellow: 0xffdf33,
+  green: 0x00aa00,
+  black: 0x48494b,
+  blue: 0x1133ff,
+  purple: 0xaa00dd,
 }
 
 export const app = new Application({

@@ -11,7 +11,6 @@ import { app, handleWheelEvent, colorFilters } from '../../services/graphics-ser
 import { useGameStore } from '../../stores/game'
 import StrategySelectionOverlay from '../../components/overlays/StrategySelectionOverlay.vue'
 import * as webService from '../../services/web-service/index'
-import * as PIXI from 'pixi.js'
 
 export default defineComponent({
   name: 'BoardView',
@@ -53,12 +52,12 @@ export default defineComponent({
         system.units.forEach((unit, idx) => {
           Assets.load(`/img/units/${unit.type}.webp`).then((texture) => {
             const unitSprite = new Sprite(texture)
-            unitSprite.scale.set(1.5 / scaleFactor, 1.5 / scaleFactor)
+            unitSprite.scale.set(1.8 / scaleFactor, 1.8 / scaleFactor)
 
             if (unit.player?.color) unitSprite.filters = colorFilters(unit.player.color)
 
-            unitSprite.x = sprite.x + Math.floor(idx / 3) * 40 - 40
-            unitSprite.y = sprite.y + (idx % 3) * 40 - 40
+            unitSprite.x = sprite.x + Math.floor(idx / 3) * 50 - 50
+            unitSprite.y = sprite.y + (idx % 3) * 50 - 50
 
             // Rotate around the center
             unitSprite.anchor.set(0.5, 0.5)
