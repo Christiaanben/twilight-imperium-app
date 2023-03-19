@@ -41,6 +41,7 @@ export interface StrategyResponse {
 export interface UnitResponse {
   system: number
   type: UnitType
+  owned_by: number
 }
 
 export interface GameResponse {

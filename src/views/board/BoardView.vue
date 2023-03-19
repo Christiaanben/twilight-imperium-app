@@ -7,7 +7,7 @@
 import { defineComponent } from 'vue'
 import { Assets, Container, Sprite } from 'pixi.js'
 import { hexToPoint } from '../../services/hex-service'
-import { app, handleWheelEvent } from '../../services/graphics-service'
+import { app, handleWheelEvent, colorFilters } from '../../services/graphics-service'
 import { useGameStore } from '../../stores/game'
 import StrategySelectionOverlay from '../../components/overlays/StrategySelectionOverlay.vue'
 import * as webService from '../../services/web-service/index'
@@ -54,11 +54,8 @@ export default defineComponent({
           Assets.load(`/img/units/${unit.type}.webp`).then((texture) => {
             const unitSprite = new Sprite(texture)
             unitSprite.scale.set(1.5 / scaleFactor, 1.5 / scaleFactor)
-            const colorMatrix = new PIXI.filters.ColorMatrixFilter()
-            const colorMatrix2 = new PIXI.filters.ColorMatrixFilter()
-            colorMatrix.saturate(1, true)
-            colorMatrix2.hue(330, true)
-            unitSprite.filters = [colorMatrix, colorMatrix2]
+
+            if (unit.player?.color) unitSprite.filters = colorFilters(unit.player.color)
 
             unitSprite.x = sprite.x + Math.floor(idx / 3) * 40 - 40
             unitSprite.y = sprite.y + (idx % 3) * 40 - 40
