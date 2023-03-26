@@ -43,9 +43,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import FlipCard from '../cards/FlipCard.vue'
-import { useGameStore } from '../../stores/game'
-import { STRATEGY_TYPES } from '../../interfaces/strategy-type'
+import FlipCard from '../../../components/cards/FlipCard.vue'
+import { useGameStore } from '../../../stores/game'
+import { STRATEGY_TYPES } from '../../../interfaces/strategy-type'
 
 export default defineComponent({
   name: 'StrategySelectionOverlay',

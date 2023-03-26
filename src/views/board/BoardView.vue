@@ -1,5 +1,6 @@
 <template>
   <strategy-selection-overlay v-model="strategySelection" v-if="gameStore.phase === 'strategy'" />
+  <system-selection-dialog />
   <div id="pixiCanvas" ref="pixi" />
 </template>
 
@@ -9,12 +10,14 @@ import { Assets, Container, Sprite } from 'pixi.js'
 import { hexToPoint } from '../../services/hex-service'
 import { app, handleWheelEvent, colorFilters } from '../../services/graphics-service'
 import { useGameStore } from '../../stores/game'
-import StrategySelectionOverlay from '../../components/overlays/StrategySelectionOverlay.vue'
+import StrategySelectionOverlay from './components/StrategySelectionOverlay.vue'
 import * as webService from '../../services/web-service/index'
+import SystemSelectionDialog from './components/SystemSelectionDialog.vue'
+import { GlowFilter } from '@pixi/filter-glow'
 
 export default defineComponent({
   name: 'BoardView',
-  components: { StrategySelectionOverlay },
+  components: { SystemSelectionDialog, StrategySelectionOverlay },
   setup() {
     const gameStore = useGameStore()
     return {
@@ -31,6 +34,7 @@ export default defineComponent({
     const scaleFactor = 3.6
 
     const container = new Container()
+    container.sortableChildren = true
     app.stage.addChild(container)
 
     this.gameStore.systems.forEach((system) => {
@@ -46,12 +50,37 @@ export default defineComponent({
         // Rotate around the center
         sprite.anchor.set(0.5, 0.5)
 
+        // Attach listener to system
+        sprite.interactive = true
+        sprite.on('click', () => {
+          this.gameStore.selectedSystemId = system.id
+          console.log('Clicked on system', system.id)
+        })
+        sprite.on('mouseover', () => {
+          const glowFilter = new GlowFilter({
+            distance: 15,
+            outerStrength: 1,
+            innerStrength: 1,
+            color: 0x00ff00,
+            quality: 0.3,
+          })
+          sprite.filters = [glowFilter]
+          sprite.zIndex = 1
+          document.body.style.cursor = 'pointer'
+        })
+        sprite.on('mouseout', () => {
+          sprite.filters = []
+          sprite.zIndex = 0
+          document.body.style.cursor = 'default'
+        })
+
         // Add the sprite to the scene we are building
         container.addChild(sprite)
 
         system.units.forEach((unit, idx) => {
           Assets.load(`/img/units/${unit.type}.webp`).then((texture) => {
             const unitSprite = new Sprite(texture)
+            unitSprite.zIndex = 3
             unitSprite.scale.set(1.8 / scaleFactor, 1.8 / scaleFactor)
 
             if (unit.player?.color) unitSprite.filters = colorFilters(unit.player.color)

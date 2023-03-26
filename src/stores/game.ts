@@ -16,6 +16,7 @@ export const useGameStore = defineStore('game', {
     players: [] as Player[],
     phase: 'strategy' as Phase,
     units: [] as Unit[],
+    selectedSystemId: null as number | null,
   }),
   getters: {
     getStrategies: (state) => {

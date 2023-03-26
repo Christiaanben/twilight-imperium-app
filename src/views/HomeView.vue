@@ -92,7 +92,7 @@ import { defineComponent } from 'vue'
 import TiCard from '../components/cards/TiCard.vue'
 import HandCards from '../components/cards/HandCards.vue'
 import VictoryPointTracker from '@/components/cards/VictoryPointTracker.vue'
-import StrategySelectionOverlay from '../components/overlays/StrategySelectionOverlay.vue'
+import StrategySelectionOverlay from './board/components/StrategySelectionOverlay.vue'
 import FlipCard from '../components/cards/FlipCard.vue'
 
 export default defineComponent({
