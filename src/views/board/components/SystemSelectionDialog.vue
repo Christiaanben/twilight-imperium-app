@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="showOverlay" max-width="50rem" location="right">
+  <v-dialog v-model="showOverlay" max-width="50rem" class="d-flex justify-end ma-16">
     <v-card>
       <v-card-title>System Selection</v-card-title>
     </v-card>

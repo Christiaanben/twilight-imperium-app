@@ -6,8 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Container } from 'pixi.js'
-import { app, handleWheelEvent, createSystemSprite } from '../../services/graphics-service'
+import { app, handleWheelEvent, createSystemSprite, board } from '../../services/graphics-service'
 import { useGameStore } from '../../stores/game'
 import StrategySelectionOverlay from './components/StrategySelectionOverlay.vue'
 import * as webService from '../../services/web-service/index'
@@ -30,12 +29,8 @@ export default defineComponent({
     const pixiCanvas = app.view as HTMLCanvasElement
     pixiDiv.appendChild(pixiCanvas)
 
-    const container = new Container()
-    container.sortableChildren = true
-    app.stage.addChild(container)
-
     this.gameStore.systems.forEach((system) => {
-      createSystemSprite(system).then((sprite) => container.addChild(sprite))
+      createSystemSprite(system).then((sprite) => board.addChild(sprite))
     })
 
     pixiDiv.addEventListener('mousedown', this.handleMouseEvent)
@@ -60,8 +55,8 @@ export default defineComponent({
       } else if (event.type === 'mouseup' && event.button == 2) {
         this.mouseDown = false
       } else if (event.type === 'mousemove' && this.mouseDown) {
-        app.stage.x += event.movementX
-        app.stage.y += event.movementY
+        board.x += event.movementX
+        board.y += event.movementY
       }
     },
   },

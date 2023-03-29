@@ -1,4 +1,4 @@
-import { Application, Assets, Sprite } from 'pixi.js'
+import { Application, Assets, Container, Sprite } from 'pixi.js'
 import { ColorMatrixFilter } from '@pixi/filter-color-matrix'
 import { Color } from '../../interfaces/color'
 import { GlowFilter } from '@pixi/filter-glow'
@@ -25,6 +25,9 @@ export const app = new Application({
   backgroundColor: '0x080810',
   resizeTo: window,
 })
+export const board = new Container()
+board.sortableChildren = true
+app.stage.addChild(board)
 app.stage.scale.set(zoomLevel, zoomLevel)
 
 export function handleWheelEvent(event: WheelEvent) {
@@ -41,6 +44,10 @@ export function handleWheelEvent(event: WheelEvent) {
   }
 }
 
+function getName(type: string, id: number) {
+  return `${type}-${id}`
+}
+
 export function colorFilters(color: Color): ColorMatrixFilter[] {
   const filters = [new ColorMatrixFilter(), new ColorMatrixFilter()]
   filters[0].greyscale(0.5, false)
@@ -49,8 +56,10 @@ export function colorFilters(color: Color): ColorMatrixFilter[] {
 }
 
 const handleSystemClick = (systemId: number) => {
+  console.debug('[graphics] Clicked on system:', systemId)
   useGameStore().selectedSystemId = systemId
-  console.log('Clicked on system', systemId)
+  const sprite = board.getChildByName(getName('system', systemId))
+  if (sprite) alignSprite(sprite as Sprite)
 }
 
 const handleSystemMouseOut = (sprite: Sprite) => {
@@ -90,6 +99,7 @@ export const createSystemSprite = async (system: System) => {
   const sprite = new Sprite(assets[system.id])
 
   sprite.scale.set(1 / scaleFactor, 1 / scaleFactor)
+  sprite.name = getName('system', system.id)
 
   const size = sprite.width / 2
   const point = hexToPoint(system.getHex())
@@ -127,4 +137,13 @@ const createUnitSprite = async (unit: Unit, systemSprite: Sprite, index: number)
   unitSprite.anchor.set(0.5, 0.5)
 
   systemSprite.addChild(unitSprite)
+}
+
+function alignSprite(sprite: Sprite) {
+  console.debug('[graphics] Aligning sprite:', sprite)
+  const screenCenterX = app.screen.width / 2
+  const screenCenterY = app.screen.height / 2
+  const offsetX = screenCenterX - sprite.x
+  const offsetY = screenCenterY - sprite.y
+  board.position.set(offsetX, offsetY)
 }
