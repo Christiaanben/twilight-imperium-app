@@ -7,6 +7,7 @@ import { hexToPoint } from '../hex-service'
 import { useGameStore } from '../../stores/game'
 import { Unit } from '../../models/unit'
 import { UNIT_TYPES } from '../../interfaces/unit-type'
+import gsap from 'gsap'
 
 const zoomDelta = 1.1
 let zoomLevel = 1
@@ -145,5 +146,5 @@ function alignSprite(sprite: Sprite) {
   const screenCenterY = app.screen.height / 2
   const offsetX = screenCenterX - sprite.x
   const offsetY = screenCenterY - sprite.y
-  board.position.set(offsetX, offsetY)
+  gsap.to(board.position, { x: offsetX, y: offsetY, duration: 1, ease: 'power2.out' })
 }
