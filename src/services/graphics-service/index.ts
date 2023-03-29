@@ -8,8 +8,8 @@ import { useGameStore } from '../../stores/game'
 import { Unit } from '../../models/unit'
 import { UNIT_TYPES } from '../../interfaces/unit-type'
 
-let zoomLevel = 1
 const zoomDelta = 1.1
+let zoomLevel = 1
 const colorRGBByColor: Record<Color, number> = {
   red: 0xdd0000,
   yellow: 0xffdf33,
@@ -25,6 +25,7 @@ export const app = new Application({
   backgroundColor: '0x080810',
   resizeTo: window,
 })
+app.stage.scale.set(zoomLevel, zoomLevel)
 
 export function handleWheelEvent(event: WheelEvent) {
   if (event.deltaY !== 0) {
@@ -119,8 +120,8 @@ const createUnitSprite = async (unit: Unit, systemSprite: Sprite, index: number)
 
   if (unit.player?.color) unitSprite.filters = colorFilters(unit.player.color)
 
-  unitSprite.x = systemSprite.x + Math.floor(index / 3) * 150 - 150 * 7
-  unitSprite.y = systemSprite.y + (index % 3) * 150 - 150 * 5
+  unitSprite.x = Math.floor(index / 3) * 150 - 150
+  unitSprite.y = (index % 3) * 150 - 150
 
   // Rotate around the center
   unitSprite.anchor.set(0.5, 0.5)
