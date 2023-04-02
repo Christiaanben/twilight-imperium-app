@@ -41,8 +41,12 @@ export const useGameStore = defineStore('game', {
       router.push({ name: 'game', params: { id: gameId } })
     },
     selectStrategy(strategy: StrategyType) {
-      console.debug(`gameStore.selectStrategy strategy:${strategy}`)
+      console.debug(`[store][game] selectStrategy strategy:${strategy}`)
       webService.selectStrategy(strategy)
+    },
+    activateSystem(systemId: number) {
+      console.debug(`[store][game] activateSystem systemId:${systemId}`)
+      webService.activateSystem(systemId)
     },
   },
 })

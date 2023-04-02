@@ -17,7 +17,7 @@
         </v-list>
       </v-card-text>
       <v-card-actions>
-        <v-btn block color="primary" variant="elevated">Activate</v-btn>
+        <v-btn block color="primary" variant="elevated" @click="activateSystem">Activate</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -32,6 +32,11 @@ export default defineComponent({
   setup() {
     const gameStore = useGameStore()
     return { gameStore }
+  },
+  methods: {
+    activateSystem() {
+      if (this.gameStore.selectedSystemId !== null) this.gameStore.activateSystem(this.gameStore.selectedSystemId)
+    },
   },
   computed: {
     showOverlay: {
