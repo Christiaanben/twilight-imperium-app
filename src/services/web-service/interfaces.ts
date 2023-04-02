@@ -1,6 +1,7 @@
 import { Phase } from '../../interfaces/phase'
 import { StrategyType } from '../../interfaces/strategy-type'
 import { UnitType } from '../../interfaces/unit-type'
+import {CardType} from "../../interfaces/card-type";
 
 export interface UserResponse {
   id: string
@@ -44,12 +45,20 @@ export interface UnitResponse {
   owned_by: number
 }
 
+export interface CardResponse{
+  name: string
+  type: CardType
+  victory_points: number
+}
+
 export interface GameResponse {
   systems: SystemResponse[]
   strategies: StrategyResponse[]
   players: PlayerResponse[]
   phase: Phase
   units: UnitResponse[]
+
+  cards: CardResponse[]
 }
 
 export interface AuthResponse {

@@ -3,6 +3,7 @@ import type { Phase } from './phase'
 import type { Strategy } from '../models/strategy'
 import { Player } from '../models/player'
 import { Unit } from '../models/unit'
+import {Card} from "../models/card";
 
 export interface Game {
   systems: System[]
@@ -10,4 +11,6 @@ export interface Game {
   strategies: Strategy[]
   players: Player[]
   units: Unit[]
+
+  cards: Card[]
 }

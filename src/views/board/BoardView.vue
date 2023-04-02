@@ -1,4 +1,5 @@
 <template>
+  <victory-point-tracker></victory-point-tracker>
   <strategy-selection-overlay v-model="strategySelection" v-if="gameStore.phase === 'strategy'" />
   <system-selection-dialog />
   <div id="pixiCanvas" ref="pixi" />
@@ -14,10 +15,11 @@ import StrategySelectionOverlay from './components/StrategySelectionOverlay.vue'
 import * as webService from '../../services/web-service/index'
 import SystemSelectionDialog from './components/SystemSelectionDialog.vue'
 import { GlowFilter } from '@pixi/filter-glow'
+import VictoryPointTracker from "../../components/cards/VictoryPointTracker.vue";
 
 export default defineComponent({
   name: 'BoardView',
-  components: { SystemSelectionDialog, StrategySelectionOverlay },
+  components: {VictoryPointTracker, SystemSelectionDialog, StrategySelectionOverlay },
   setup() {
     const gameStore = useGameStore()
     return {
