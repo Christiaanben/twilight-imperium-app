@@ -9,11 +9,15 @@
       <v-card-text>
         <v-list>
           <v-list-item-title>SPACE</v-list-item-title>
-          <v-list-item> Carrier (1) </v-list-item>
-          <v-list-item-title>Planet: X</v-list-item-title>
-          <v-list-item> Infantry (3) </v-list-item>
-          <v-list-item-title>Planet: Y</v-list-item-title>
-          <v-list-item> PDS (1) </v-list-item>
+          <v-list-item v-for="[unit, quantity] in Object.entries(systemUnits.space)" :key="unit">
+            {{ unit }} ({{ quantity }})
+          </v-list-item>
+          <template v-for="[planet, units] in Object.entries(systemUnits.planets)" :key="planet">
+            <v-list-item-title>Planet: {{ planet.toLocaleUpperCase() }}</v-list-item-title>
+            <v-list-item v-for="[unit, quantity] in Object.entries(units)" :key="unit">
+              {{ unit }} ({{ quantity }})
+            </v-list-item>
+          </template>
         </v-list>
       </v-card-text>
       <v-card-actions>
@@ -48,6 +52,31 @@ export default defineComponent({
           this.gameStore.selectedSystemId = null
         }
       },
+    },
+    systemUnits() {
+      if (this.gameStore.getSelectedSystem === null)
+        return {
+          space: {},
+          planets: {},
+        }
+      const units = this.gameStore.getSelectedSystem?.units.map((unit) => unit.type)
+      const unitCounts = Object.fromEntries(units.map((unit) => [unit, 0]))
+      units.forEach((unit) => {
+        unitCounts[unit] += 1
+      })
+
+      return {
+        space: unitCounts,
+        planets: {
+          x: {
+            infantry: 3,
+          },
+          y: {
+            pds: 1,
+            infantry: 2,
+          },
+        },
+      }
     },
   },
 })

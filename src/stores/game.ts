@@ -22,6 +22,9 @@ export const useGameStore = defineStore('game', {
     getStrategies: (state) => {
       return state.strategies.sort((a, b) => a.initiative - b.initiative)
     },
+    getSelectedSystem: (state): System | null => {
+      return state.systems.find((system) => system.id === state.selectedSystemId) || null
+    },
     getPlayerById:
       (state) =>
       (id: number): Player | null => {
