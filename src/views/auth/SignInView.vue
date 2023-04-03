@@ -13,17 +13,17 @@
           class="py-2"
           data-cy="textEmail"
           v-model="email"
-          :rules="[rules.validEmail]"
-          @blur="vuelidate.email.$touch"
+          @blur="v$.email.$touch"
           variant="filled"
           label="Email"
+          :error-messages="getError('email')"
         ></v-text-field>
         <v-text-field
           class="py-2"
           data-cy="textPassword"
           v-model="password"
-          :rules="[rules.validPassword]"
-          @blur="vuelidate.password.$touch"
+          @blur="v$.password.$touch"
+          :error-messages="getError('password')"
           variant="filled"
           label="Password"
         ></v-text-field>
@@ -37,7 +37,7 @@
 import { defineComponent } from 'vue'
 import { useAuthStore } from '../../stores/auth'
 import { useVuelidate } from '@vuelidate/core'
-import { required, email } from '@vuelidate/validators'
+import { required, email, minLength } from '@vuelidate/validators'
 
 export default defineComponent({
   name: 'SignInView',
@@ -45,28 +45,27 @@ export default defineComponent({
     const authStore = useAuthStore()
     return {
       authStore,
-      vuelidate: useVuelidate(),
+      v$: useVuelidate(),
     }
   },
   data: () => ({
     email: '',
     password: '',
-    rules: {
-      validEmail: (value: any) => !!value || 'Please add a valid email.',
-      validPassword: (value: any) => !!value || 'Please add a valid password.',
-    },
   }),
   methods: {
+    getError(field: string): string[] {
+      return this.v$[field].$errors.map((error: any) => error.$message)
+    },
     async signInAccount() {
-      if (await this.vuelidate.$validate()) {
+      if (await this.v$.$validate()) {
         //ToDo add loader.
-        const registerSuccess = await this.authStore.signIn(this.email, this.password)
+        const signInSuccess = await this.authStore.signIn(this.email, this.password)
         let userSuccess = false
-        if (registerSuccess) {
+        if (signInSuccess) {
           userSuccess = await this.authStore.hydrateUser()
         }
         //ToDo disable loader
-        if (registerSuccess && userSuccess) {
+        if (signInSuccess && userSuccess) {
           this.$router.push({ path: '/' })
         } else {
           //ToDO Add error message and response
@@ -77,8 +76,20 @@ export default defineComponent({
   },
   validations() {
     return {
-      email: { required, email },
-      password: { required },
+      email: {
+        required,
+        email: {
+          $validator: email.$validator,
+          $message: 'Please add a valid email.',
+        },
+      },
+      password: {
+        required: {
+          $validator: required.$validator,
+          $message: 'Please add a valid password.',
+        },
+        minLength: minLength(4),
+      },
     }
   },
 })
