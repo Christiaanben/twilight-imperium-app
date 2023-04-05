@@ -30,6 +30,7 @@ export interface SystemResponse {
   id: number
   q: number
   r: number
+  activated_by: number[]
 }
 
 export interface StrategyResponse {

@@ -8,6 +8,7 @@ import * as webService from '../services/web-service/index'
 import { Player } from '../models/player'
 import { Strategy } from '../models/strategy'
 import { Unit } from '../models/unit'
+import { useAuthStore } from './auth'
 
 export const useGameStore = defineStore('game', {
   state: () => ({
@@ -30,6 +31,9 @@ export const useGameStore = defineStore('game', {
       (id: number): Player | null => {
         return state.players.find((player) => player.id === id) || null
       },
+    getPlayer: (state): Player | null => {
+      return state.players.find((p) => p.user?.id == useAuthStore().account?.id) || null
+    },
   },
   actions: {
     async hydrateGame(gameId: string) {
