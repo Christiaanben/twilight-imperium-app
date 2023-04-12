@@ -13,28 +13,28 @@
           class="py-2"
           data-cy="textFieldDisplayName"
           v-model="displayName"
-          :rules="[rules.validDisplayName]"
-          @blur="vuelidate.displayName.$touch"
+          @blur="v$.displayName.$touch"
           variant="filled"
           label="Display Name"
+          :error-messages="getError('displayName')"
         ></v-text-field>
         <v-text-field
           class="py-2"
           data-cy="textEmail"
           v-model="email"
-          :rules="[rules.validEmail]"
-          @blur="vuelidate.email.$touch"
+          @blur="v$.email.$touch"
           variant="filled"
           label="Email"
+          :error-messages="getError('email')"
         ></v-text-field>
         <v-text-field
           class="py-2"
           data-cy="textPassword"
           v-model="password"
-          :rules="[rules.validPassword]"
-          @blur="vuelidate.password.$touch"
+          @blur="v$.password.$touch"
           variant="filled"
           label="Password"
+          :error-messages="getError('password')"
         ></v-text-field>
         <v-btn class="mt-4" data-cy="buttonSubmit" @click="registerAccount"> Submit</v-btn>
       </form>
@@ -46,52 +46,75 @@
 import { defineComponent } from 'vue'
 import { useAuthStore } from '../../stores/auth'
 import { useVuelidate } from '@vuelidate/core'
-import { required, email } from '@vuelidate/validators'
+import {required, email, minLength} from '@vuelidate/validators'
 
 export default defineComponent({
   name: 'SignUpView',
   setup() {
     const authStore = useAuthStore()
+    authStore.clearErrors()
     return {
       authStore,
-      vuelidate: useVuelidate(),
+      v$: useVuelidate(),
     }
   },
   data: () => ({
     displayName: '',
     email: '',
     password: '',
-    rules: {
-      validDisplayName: (value: any) => !!value || 'Please add a valid display name.',
-      validEmail: (value: any) => !!value || 'Please add a valid email.',
-      validPassword: (value: any) => !!value || 'Please add a valid password.',
-    },
   }),
   methods: {
+
+    getError(field: string): string[] {
+        if( field === this.authStore.error_message.status){
+            return [this.authStore.error_message.message]
+        }
+        return this.v$[field].$errors.map((error: any) => error.$message)
+    },
+
     async registerAccount() {
-      if (await this.vuelidate.$validate()) {
-        //ToDo add loader.
+      if (await this.v$.$validate()) {
+        this.authStore.clearErrors()
         const registerSuccess = await this.authStore.register(this.displayName, this.email, this.password)
         let userSuccess = false
         if (registerSuccess) {
           userSuccess = await this.authStore.hydrateUser()
         }
 
-        //ToDo disable loader
         if (registerSuccess && userSuccess) {
           this.$router.push({ path: '/' })
         } else {
-          //ToDO Add error message and response
-          console.log(this.authStore.error_message.message)
+          this.password = ""
         }
       }
     },
   },
   validations() {
     return {
-      displayName: { required },
-      email: { required, email },
-      password: { required },
+      displayName: {
+          required: {
+              $validator: required.$validator,
+              $message: 'Please enter a display name.'
+          },
+          minLength: minLength(4),
+      },
+      email: {
+          required: {
+              $validator: required.$validator,
+              $message: 'Please enter an email.',
+          },
+          email: {
+              $validator: email.$validator,
+              $message: 'Please enter a valid email.',
+          },
+      },
+      password: {
+          required: {
+              $validator: required.$validator,
+              $message: 'Please enter a password.',
+          },
+          minLength: minLength(4),
+      },
     }
   },
 })

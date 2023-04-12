@@ -68,8 +68,11 @@ export default defineComponent({
         if (signInSuccess && userSuccess) {
           this.$router.push({ path: '/' })
         } else {
-          //ToDO Add error message and response
-          console.log(this.authStore.error_message.message)
+          if(this.authStore.error_message.status == 'email'){
+              this.email = ''
+          } else if(this.authStore.error_message.status == 'password'){
+              this.password = ''
+          }
         }
       }
     },
