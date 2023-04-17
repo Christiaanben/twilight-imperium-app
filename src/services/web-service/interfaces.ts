@@ -26,11 +26,19 @@ export interface LobbyResponse {
   players: PlayerResponse[]
 }
 
+export interface PlanetResponse {
+  id: string
+  name: string
+  influence: number
+  resource: number
+}
+
 export interface SystemResponse {
   id: number
   q: number
   r: number
   activated_by: number[]
+  planets: PlanetResponse[]
 }
 
 export interface StrategyResponse {

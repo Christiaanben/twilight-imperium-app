@@ -85,18 +85,12 @@ export default defineComponent({
       units.forEach((unit) => {
         unitCounts[unit] += 1
       })
+      const planets = this.gameStore.getSelectedSystem?.planets
+      const planetCounts = Object.fromEntries(planets.map((planet) => [planet.id, { infantry: 3 }]))
 
       return {
         space: unitCounts,
-        planets: {
-          x: {
-            infantry: 3,
-          },
-          y: {
-            pds: 1,
-            infantry: 2,
-          },
-        },
+        planets: planetCounts,
       }
     },
   },

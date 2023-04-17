@@ -3,18 +3,21 @@ import { SystemResponse } from '../services/web-service/interfaces'
 import { Unit } from './unit'
 import { useGameStore } from '../stores/game'
 import { Player } from './player'
+import { Planet } from './planet'
 
 export class System {
   id: number
   q: number
   r: number
   activatedByIds: number[]
+  planets: Planet[] = []
 
-  constructor({ id = 0, q = 0, r = 0, activatedByIds = [] as number[] } = {}) {
+  constructor({ id = 0, q = 0, r = 0, activatedByIds = [] as number[], planets = [] as Planet[] } = {}) {
     this.id = id
     this.q = q
     this.r = r
     this.activatedByIds = activatedByIds
+    this.planets = planets
   }
 
   getHex(): Hex {
@@ -35,6 +38,7 @@ export class System {
       q: systemResponse.q,
       r: systemResponse.r,
       activatedByIds: systemResponse.activated_by,
+      planets: systemResponse.planets.map(Planet.fromJson),
     })
   }
 }
