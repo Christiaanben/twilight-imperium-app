@@ -29,3 +29,14 @@ export function selectStrategy(strategy: StrategyType) {
     })
   )
 }
+
+export function activateSystem(systemId: number) {
+  socket?.send(
+    JSON.stringify({
+      type: 'activate_system',
+      kwargs: {
+        system_id: systemId,
+      },
+    })
+  )
+}

@@ -8,10 +8,15 @@ import {accountFactory} from "../services/web-service/factories";
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         account: null as Account | null,
-        error_message: {status: null, message: ''},
+        error_message: {status: '', message: ''},
         token: null as string | null,
     }),
     actions: {
+
+        clearErrors() {
+          this.error_message.message = ''
+          this.error_message.status = ''
+        },
 
         async register(displayName: string,
                        email: string,
@@ -25,9 +30,13 @@ export const useAuthStore = defineStore('auth', {
                 this.token = response.data.key
                 return true
             }).catch(reason => {
-                this.error_message.message = reason.message
-                this.error_message.status = reason.status
-                console.error(reason)
+                if(Object.keys(reason.response.data)[0] === 'email'){
+                    this.error_message.status = Object.keys(reason.response.data)[0]
+                    this.error_message.message = reason.response.data.email[0]
+                }else{
+                    this.error_message.message = reason.message
+                    this.error_message.status = reason.status
+                }
                 return false
             })
         },
@@ -42,7 +51,8 @@ export const useAuthStore = defineStore('auth', {
                 return true
             }).catch(reason => {
                 if(reason.response.status < 500){
-                    this.error_message.message = "Invalid username or password."
+                    this.error_message.status = Object.keys(reason.response.data)[0]
+                    this.error_message.message = Object.values(reason.response.data)[0] as string
                 }else {
                     this.error_message.message = "Something went wrong. Monkey is working on it."
                 }

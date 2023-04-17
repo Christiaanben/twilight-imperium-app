@@ -8,7 +8,7 @@ import * as webService from '../services/web-service/index'
 import { Player } from '../models/player'
 import { Strategy } from '../models/strategy'
 import { Unit } from '../models/unit'
-import {Card} from "../models/card";
+import { useAuthStore } from './auth'
 
 export const useGameStore = defineStore('game', {
   state: () => ({
@@ -17,42 +17,43 @@ export const useGameStore = defineStore('game', {
     players: [] as Player[],
     phase: 'strategy' as Phase,
     units: [] as Unit[],
-    cards: [] as Card[],
     selectedSystemId: null as number | null,
   }),
   getters: {
     getStrategies: (state) => {
       return state.strategies.sort((a, b) => a.initiative - b.initiative)
     },
+    getSelectedSystem: (state): System | null => {
+      return state.systems.find((system) => system.id === state.selectedSystemId) || null
+    },
     getPlayerById:
       (state) =>
       (id: number): Player | null => {
         return state.players.find((player) => player.id === id) || null
       },
-    getAllCards: (state) => {
-      return state.cards
+    getPlayer: (state): Player | null => {
+      return state.players.find((p) => p.user?.id == useAuthStore().account?.id) || null
     },
-    getAllObjectives: (state) => {
-      return state.cards.filter((card) => card.type === 'stage_1' || card.type === 'stage_2')
-    }
-
   },
   actions: {
     async hydrateGame(gameId: string) {
-      let { systems, phase, strategies, players, units, cards } = await fetchGame(gameId)
+      let { systems, phase, strategies, players, units } = await fetchGame(gameId)
       this.systems = systems
       this.strategies = strategies
       this.phase = phase
       this.players = players
       this.units = units
-      this.cards = cards
     },
     switchToGame(gameId: string) {
       router.push({ name: 'game', params: { id: gameId } })
     },
     selectStrategy(strategy: StrategyType) {
-      console.debug(`gameStore.selectStrategy strategy:${strategy}`)
+      console.debug(`[store][game] selectStrategy strategy:${strategy}`)
       webService.selectStrategy(strategy)
+    },
+    activateSystem(systemId: number) {
+      console.debug(`[store][game] activateSystem systemId:${systemId}`)
+      webService.activateSystem(systemId)
     },
   },
 })
