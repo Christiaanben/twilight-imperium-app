@@ -49,6 +49,7 @@ export interface StrategyResponse {
 
 export interface UnitResponse {
   system: number
+  planet: string | null
   type: UnitType
   owned_by: number
 }
