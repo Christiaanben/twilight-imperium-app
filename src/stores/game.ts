@@ -36,8 +36,8 @@ export const useGameStore = defineStore('game', {
       (id: number): Player | null => {
         return state.players.find((player) => player.id === id) || null
       },
-    getPlayer: (state): Player | null => {
-      return state.players.find((p) => p.user?.id == useAuthStore().account?.id) || null
+    getPlayer: (state): Player | undefined => {
+      return state.players.find((p) => p.user?.id == useAuthStore().account?.id)
     },
   },
   actions: {

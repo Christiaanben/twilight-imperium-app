@@ -2,6 +2,11 @@
   <strategy-selection-overlay v-model="strategySelection" v-if="gameStore.phase === 'strategy'" />
   <system-selection-dialog />
   <div id="pixiCanvas" ref="pixi" />
+  <v-row class="player-overlay">
+    <v-col cols="3">
+      <tokens-card :player="gameStore.getPlayer" />
+    </v-col>
+  </v-row>
 </template>
 
 <script lang="ts">
@@ -11,10 +16,11 @@ import { useGameStore } from '../../stores/game'
 import StrategySelectionOverlay from './components/StrategySelectionOverlay.vue'
 import * as webService from '../../services/web-service/index'
 import SystemSelectionDialog from './components/SystemSelectionDialog.vue'
+import TokensCard from './components/TokensCard.vue'
 
 export default defineComponent({
   name: 'BoardView',
-  components: { SystemSelectionDialog, StrategySelectionOverlay },
+  components: { SystemSelectionDialog, StrategySelectionOverlay, TokensCard },
   setup() {
     const gameStore = useGameStore()
     return {
@@ -63,4 +69,9 @@ export default defineComponent({
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.player-overlay {
+  position: fixed;
+  bottom: 0;
+}
+</style>

@@ -14,6 +14,9 @@ export interface PlayerResponse {
   color: null
   faction: string
   is_ready: boolean
+  n_tactic_tokens: number
+  n_fleet_tokens: number
+  n_strategy_tokens: number
 }
 
 export interface PlayerEventInfo {
