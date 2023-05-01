@@ -10,9 +10,6 @@
   <strategy-selection-overlay />
 
   <v-overlay width="100vw">
-    <template v-slot:activator="{ isActive, props }">
-      <victory-point-tracker v-bind="props" />
-    </template>
     <v-row>
       <v-col cols="2" v-for="_ in 5">
         <ti-card
@@ -91,13 +88,12 @@ import { useLobbyStore } from '../stores/lobby'
 import { defineComponent } from 'vue'
 import TiCard from '../components/cards/TiCard.vue'
 import HandCards from '../components/cards/HandCards.vue'
-import VictoryPointTracker from '@/components/cards/VictoryPointTracker.vue'
 import StrategySelectionOverlay from './board/components/StrategySelectionOverlay.vue'
 import FlipCard from '../components/cards/FlipCard.vue'
 
 export default defineComponent({
   name: 'HomeView',
-  components: { FlipCard, StrategySelectionOverlay, TiCard, VictoryPointTracker, HandCards },
+  components: { FlipCard, StrategySelectionOverlay, TiCard, HandCards },
   setup() {
     const lobbyStore = useLobbyStore()
     return {

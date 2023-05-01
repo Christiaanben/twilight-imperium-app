@@ -1,7 +1,11 @@
 <template>
   <strategy-selection-overlay v-model="strategySelection" v-if="gameStore.phase === 'strategy'" />
   <system-selection-dialog />
+
   <div id="pixiCanvas" ref="pixi" />
+  <v-row class="d-flex justify-center" style="position: fixed; top: 4vh; width: 100vw; height: 10vh;">
+    <victory-point-tracker-overlay/>
+  </v-row>
 </template>
 
 <script lang="ts">
@@ -11,10 +15,12 @@ import { useGameStore } from '../../stores/game'
 import StrategySelectionOverlay from './components/StrategySelectionOverlay.vue'
 import * as webService from '../../services/web-service/index'
 import SystemSelectionDialog from './components/SystemSelectionDialog.vue'
+import TiCard from "../../components/cards/TiCard.vue";
+import VictoryPointTrackerOverlay from "./components/VictoryPointTrackerOverlay.vue";
 
 export default defineComponent({
   name: 'BoardView',
-  components: { SystemSelectionDialog, StrategySelectionOverlay },
+  components: {VictoryPointTrackerOverlay, TiCard, SystemSelectionDialog, StrategySelectionOverlay },
   setup() {
     const gameStore = useGameStore()
     return {
