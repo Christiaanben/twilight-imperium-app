@@ -11,12 +11,18 @@
           <v-card-text>
             <v-list>
               <v-list-item-title>SPACE</v-list-item-title>
-              <v-list-item v-for="[unit, quantity] in Object.entries(systemUnits.space)" :key="unit">
+              <v-list-item
+                v-for="[unit, quantity] in Object.entries(systemUnits.space).filter(([k, v]) => v !== 0)"
+                :key="unit"
+              >
                 {{ unit }} ({{ quantity }})
               </v-list-item>
-              <template v-for="[planet, units] in Object.entries(systemUnits.planets)" :key="planet">
+              <template
+                v-for="[planet, units] in Object.entries(systemUnits).filter(([k, v]) => k !== 'space')"
+                :key="planet"
+              >
                 <v-list-item-title>Planet: {{ planet.toLocaleUpperCase() }}</v-list-item-title>
-                <v-list-item v-for="[unit, quantity] in Object.entries(units)" :key="unit">
+                <v-list-item v-for="[unit, quantity] in Object.entries(units).filter(([k, v]) => v !== 0)" :key="unit">
                   {{ unit }} ({{ quantity }})
                 </v-list-item>
               </template>
@@ -43,6 +49,7 @@
 import { defineComponent } from 'vue'
 import { useGameStore } from '../../../stores/game'
 import { System } from '../../../models/system'
+import * as gameService from '../../../services/game-service'
 
 export default defineComponent({
   name: 'SystemSelectionDialog',
@@ -78,26 +85,8 @@ export default defineComponent({
       if (this.gameStore.getSelectedSystem === null)
         return {
           space: {},
-          planets: {},
         }
-      const units = this.gameStore.getSelectedSystem?.units.map((unit) => unit.type)
-      const unitCounts = Object.fromEntries(units.map((unit) => [unit, 0]))
-      units.forEach((unit) => {
-        unitCounts[unit] += 1
-      })
-
-      return {
-        space: unitCounts,
-        planets: {
-          x: {
-            infantry: 3,
-          },
-          y: {
-            pds: 1,
-            infantry: 2,
-          },
-        },
-      }
+      return gameService.getUnitsCountsForSystem(this.gameStore.getSelectedSystem)
     },
   },
 })

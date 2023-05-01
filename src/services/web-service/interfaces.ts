@@ -15,6 +15,9 @@ export interface PlayerResponse {
   color: null
   faction: string
   is_ready: boolean
+  n_tactic_tokens: number
+  n_fleet_tokens: number
+  n_strategy_tokens: number
 }
 
 export interface PlayerEventInfo {
@@ -27,11 +30,19 @@ export interface LobbyResponse {
   players: PlayerResponse[]
 }
 
+export interface PlanetResponse {
+  id: string
+  name: string
+  influence: number
+  resource: number
+}
+
 export interface SystemResponse {
   id: number
   q: number
   r: number
   activated_by: number[]
+  planets: PlanetResponse[]
 }
 
 export interface StrategyResponse {
@@ -42,6 +53,7 @@ export interface StrategyResponse {
 
 export interface UnitResponse {
   system: number
+  planet: string | null
   type: UnitType
   owned_by: number
 }

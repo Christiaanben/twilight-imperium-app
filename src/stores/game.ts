@@ -28,13 +28,18 @@ export const useGameStore = defineStore('game', {
     getSelectedSystem: (state): System | null => {
       return state.systems.find((system) => system.id === state.selectedSystemId) || null
     },
+    getSystemById:
+      (state) =>
+      (id: number): System | null => {
+        return state.systems.find((system) => system.id === id) || null
+      },
     getPlayerById:
       (state) =>
       (id: number): Player | null => {
         return state.players.find((player) => player.id === id) || null
       },
-    getPlayer: (state): Player | null => {
-      return state.players.find((p) => p.user?.id == useAuthStore().account?.id) || null
+    getPlayer: (state): Player | undefined => {
+      return state.players.find((p) => p.user?.id == useAuthStore().account?.id)
     },
   },
   actions: {
