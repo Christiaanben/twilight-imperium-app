@@ -70,7 +70,6 @@ export interface GameResponse {
   players: PlayerResponse[]
   phase: Phase
   units: UnitResponse[]
-
   cards: CardResponse[]
 }
 

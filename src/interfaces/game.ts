@@ -11,6 +11,5 @@ export interface Game {
   strategies: Strategy[]
   players: Player[]
   units: Unit[]
-
   cards: Card[]
 }

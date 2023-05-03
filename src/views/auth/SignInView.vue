@@ -72,7 +72,6 @@ export default defineComponent({
               this.email = ''
           }
           this.password = ''
-
         }
       }
     },

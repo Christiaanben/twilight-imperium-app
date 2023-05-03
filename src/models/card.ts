@@ -1,9 +1,7 @@
-import {CardResponse, UnitResponse} from '../services/web-service/interfaces'
-import { useGameStore } from '../stores/game'
+import {CardResponse} from '../services/web-service/interfaces'
 import {CardType} from "../interfaces/card-type";
 
 export class Card {
-
     name: string
     type: string
     victoryPoints: number
