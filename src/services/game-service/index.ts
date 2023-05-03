@@ -1,6 +1,5 @@
 import type { System } from '../../models/system'
-import type { SystemUnitCounts } from '../game-service/interfaces'
-import { useGameStore } from '../../stores/game'
+import type { SystemUnitCounts } from './interfaces'
 import { UNIT_TYPES } from '../../interfaces/unit-type'
 
 export function getUnitsCountsForSystem(system: System): SystemUnitCounts {

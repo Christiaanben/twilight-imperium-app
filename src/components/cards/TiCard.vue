@@ -67,6 +67,8 @@ export default defineComponent({
           secret: '/img/cards/secret-card-template.jfif',
           stage1: '/img/cards/stage1-card-template.jfif',
           stage2: '/img/cards/stage2-card-template.jfif',
+          stage1_back: '/img/cards/stage1-card-template-back.webp',
+          stage2_back: '/img/cards/stage2-card-template-back.webp',
         }[this.type] || ''
       )
     },

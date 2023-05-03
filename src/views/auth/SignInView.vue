@@ -70,9 +70,8 @@ export default defineComponent({
         } else {
           if(this.authStore.error_message.status == 'email'){
               this.email = ''
-          } else if(this.authStore.error_message.status == 'password'){
-              this.password = ''
           }
+          this.password = ''
         }
       }
     },
