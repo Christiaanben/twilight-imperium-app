@@ -1,7 +1,7 @@
 import { Phase } from '../../interfaces/phase'
 import { StrategyType } from '../../interfaces/strategy-type'
 import { UnitType } from '../../interfaces/unit-type'
-import {CardType} from "../../interfaces/card-type";
+import { CardType } from '../../interfaces/card-type'
 
 export interface UserResponse {
   id: string
@@ -58,8 +58,11 @@ export interface UnitResponse {
   owned_by: number
 }
 
-export interface CardResponse{
+export interface CardResponse {
+  body: string
+  flavor: string
   name: string
+  subtitle: string
   type: CardType
   victory_points: number
 }
