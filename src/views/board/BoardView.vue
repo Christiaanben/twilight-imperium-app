@@ -3,13 +3,18 @@
   <system-selection-dialog />
 
   <div id="pixiCanvas" ref="pixi" />
-  <v-row class="d-flex justify-center" style="position: fixed; top: 4vh; width: 100vw; height: 10vh;">
-    <victory-point-tracker-overlay/>
+  <v-row class="d-flex justify-center" style="position: fixed; top: 4vh; width: 100vw; height: 10vh">
+    <victory-point-tracker-overlay />
   </v-row>
   <v-row class="player-overlay">
     <v-col cols="3">
       <tokens-card :player="gameStore.getPlayer" />
     </v-col>
+    <v-col cols="3">
+      <hand-cards />
+    </v-col>
+    <v-col cols="3"> </v-col>
+    <v-col cols="3"> </v-col>
   </v-row>
 </template>
 
@@ -21,17 +26,19 @@ import StrategySelectionOverlay from './components/StrategySelectionOverlay.vue'
 import * as webService from '../../services/web-service/index'
 import SystemSelectionDialog from './components/SystemSelectionDialog.vue'
 import TokensCard from './components/TokensCard.vue'
-import TiCard from "../../components/cards/TiCard.vue";
-import VictoryPointTrackerOverlay from "./components/VictoryPointTrackerOverlay.vue";
+import TiCard from '../../components/cards/TiCard.vue'
+import VictoryPointTrackerOverlay from './components/VictoryPointTrackerOverlay.vue'
+import HandCards from './components/HandCards.vue'
 
 export default defineComponent({
   name: 'BoardView',
   components: {
-      VictoryPointTrackerOverlay,
-      TiCard,
-      SystemSelectionDialog,
-      StrategySelectionOverlay,
-      TokensCard,
+    VictoryPointTrackerOverlay,
+    TiCard,
+    SystemSelectionDialog,
+    StrategySelectionOverlay,
+    TokensCard,
+    HandCards,
   },
   setup() {
     const gameStore = useGameStore()
@@ -83,6 +90,7 @@ export default defineComponent({
 
 <style scoped>
 .player-overlay {
+  width: 100%;
   position: fixed;
   bottom: 0;
 }

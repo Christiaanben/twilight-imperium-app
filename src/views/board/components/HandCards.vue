@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import TiCard from './TiCard.vue'
+import TiCard from '@/components/cards/TiCard.vue'
 
 export default defineComponent({
   name: 'HandCards',
@@ -94,8 +94,6 @@ export default defineComponent({
   padding: 0 50px;
   justify-content: center;
   position: fixed;
-  left: 0;
-  right: 0;
 }
 
 .card {

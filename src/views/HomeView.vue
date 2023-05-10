@@ -87,7 +87,7 @@
 import { useLobbyStore } from '../stores/lobby'
 import { defineComponent } from 'vue'
 import TiCard from '../components/cards/TiCard.vue'
-import HandCards from '../components/cards/HandCards.vue'
+import HandCards from './board/components/HandCards.vue'
 import StrategySelectionOverlay from './board/components/StrategySelectionOverlay.vue'
 import FlipCard from '../components/cards/FlipCard.vue'
 
