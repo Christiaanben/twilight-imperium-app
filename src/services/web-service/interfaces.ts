@@ -65,6 +65,7 @@ export interface CardResponse {
   subtitle: string
   type: CardType
   victory_points: number
+  owned_by: number | null
 }
 
 export interface GameResponse {

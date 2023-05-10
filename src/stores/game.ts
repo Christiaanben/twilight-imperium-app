@@ -9,7 +9,7 @@ import { Player } from '../models/player'
 import { Strategy } from '../models/strategy'
 import { Unit } from '../models/unit'
 import { useAuthStore } from './auth'
-import {Card} from "../models/card";
+import { Card } from '../models/card'
 
 export const useGameStore = defineStore('game', {
   state: () => ({
@@ -19,7 +19,7 @@ export const useGameStore = defineStore('game', {
     phase: 'strategy' as Phase,
     units: [] as Unit[],
     selectedSystemId: null as number | null,
-    cards: [] as Card[]
+    cards: [] as Card[],
   }),
   getters: {
     getStrategies: (state) => {
@@ -41,10 +41,15 @@ export const useGameStore = defineStore('game', {
     getPlayer: (state): Player | undefined => {
       return state.players.find((p) => p.user?.id == useAuthStore().account?.id)
     },
+    getCardsByOwner:
+      (state) =>
+      (ownerId: number): Card[] => {
+        return state.cards.filter((card) => card.ownedById === ownerId)
+      },
   },
   actions: {
     async hydrateGame(gameId: string) {
-      let { systems, phase, strategies, players, units , cards} = await fetchGame(gameId)
+      let { systems, phase, strategies, players, units, cards } = await fetchGame(gameId)
       this.systems = systems
       this.strategies = strategies
       this.phase = phase

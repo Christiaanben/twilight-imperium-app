@@ -1,5 +1,5 @@
 <template>
-  <v-card style="background-color: gray" height="300" class="mx-auto rounded-lg" width="201">
+  <v-card style="background-color: transparent" height="300" class="mx-auto rounded-lg" width="201">
     <v-img :src="imageSrc">
       <div class="d-flex flex-column py-2 px-4 fill-height">
         <div class="title px-2" :class="{ action: type === 'action' }" :style="[titleBackground]">

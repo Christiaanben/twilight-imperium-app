@@ -80,20 +80,18 @@
       />
     </v-col>
   </v-row>
-  <hand-cards />
 </template>
 
 <script lang="ts">
 import { useLobbyStore } from '../stores/lobby'
 import { defineComponent } from 'vue'
 import TiCard from '../components/cards/TiCard.vue'
-import HandCards from './board/components/HandCards.vue'
 import StrategySelectionOverlay from './board/components/StrategySelectionOverlay.vue'
 import FlipCard from '../components/cards/FlipCard.vue'
 
 export default defineComponent({
   name: 'HomeView',
-  components: { FlipCard, StrategySelectionOverlay, TiCard, HandCards },
+  components: { FlipCard, StrategySelectionOverlay, TiCard },
   setup() {
     const lobbyStore = useLobbyStore()
     return {

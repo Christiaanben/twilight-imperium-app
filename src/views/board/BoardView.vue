@@ -11,7 +11,7 @@
       <tokens-card :player="gameStore.getPlayer" />
     </v-col>
     <v-col cols="3">
-      <hand-cards />
+      <hand-cards :cards="gameStore.getCardsByOwner(gameStore.getPlayer?.id || 0)" />
     </v-col>
     <v-col cols="3"> </v-col>
     <v-col cols="3"> </v-col>
