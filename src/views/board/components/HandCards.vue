@@ -1,10 +1,7 @@
 <template>
   <div class="cards">
-    <div v-for="(card, i) in cards" class="card">
-      <div
-        :style="`background: transparent;transform: translateY(${offset(i)}px) rotate(${rotation(i)}deg) scale(.8)`"
-        class="card-face"
-      >
+    <div v-for="(card, i) in cards" class="card" @click="selectCard(i)">
+      <div :style="`transform: translateY(${offset(i)}px) rotate(${rotation(i)}deg) scale(.8)`" class="card-face">
         <ti-card
           :type="card.type"
           :title="card.name"
@@ -31,8 +28,8 @@ export default defineComponent({
     },
   },
   data: () => ({
-    rotationRange: 50,
-    offsetRange: 80,
+    rotationRange: 20,
+    offsetRange: 20,
   }),
   components: { TiCard },
   methods: {
@@ -41,6 +38,9 @@ export default defineComponent({
     },
     offset(i: number) {
       return Math.abs(((i - (this.cards.length - 1) / 2) / (this.cards.length - 2)) * this.offsetRange)
+    },
+    selectCard(i: number) {
+      console.debug('clicked', i)
     },
   },
 })
@@ -60,15 +60,16 @@ export default defineComponent({
   margin: 0 -25px;
   position: relative;
   width: 100px;
+  cursor: pointer;
 }
 
 .card:after {
   /*background: rgba(255, 0, 0, 0.15); !* comment out *!*/
   bottom: 0;
   content: '';
-  left: -60px;
+  left: -50px;
   position: absolute;
-  right: -60px;
+  right: -50px;
   top: 0;
   z-index: 10;
 }
