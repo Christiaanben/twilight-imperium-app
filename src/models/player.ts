@@ -12,6 +12,7 @@ export class Player {
   nTacticTokens: number
   nFleetTokens: number
   nStrategyTokens: number
+  nTradeGoods: number
 
   constructor({
     id = null as null | number,
@@ -22,6 +23,7 @@ export class Player {
     nTacticTokens = 0,
     nFleetTokens = 0,
     nStrategyTokens = 0,
+    nTradeGoods = 0,
   } = {}) {
     this.id = id
     this._color = color
@@ -31,6 +33,7 @@ export class Player {
     this.nTacticTokens = nTacticTokens
     this.nFleetTokens = nFleetTokens
     this.nStrategyTokens = nStrategyTokens
+    this.nTradeGoods = nTradeGoods
   }
 
   get faction(): string | null {
@@ -76,6 +79,7 @@ export class Player {
       nTacticTokens: playerResponse.n_tactic_tokens,
       nFleetTokens: playerResponse.n_fleet_tokens,
       nStrategyTokens: playerResponse.n_strategy_tokens,
+      nTradeGoods: playerResponse.n_trade_goods,
     })
   }
 

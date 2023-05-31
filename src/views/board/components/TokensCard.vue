@@ -4,7 +4,7 @@
     <p>Tactic Tokens: {{ player?.nTacticTokens }}</p>
     <p>Fleet Tokens: {{ player?.nFleetTokens }}</p>
     <p>Strategy Tokens: {{ player?.nStrategyTokens }}</p>
-    <p>Trade Goods: 0</p>
+    <p>Trade Goods: {{ player?.nTradeGoods }}</p>
     <p>Commodities: 0/0</p>
   </v-card>
 </template>

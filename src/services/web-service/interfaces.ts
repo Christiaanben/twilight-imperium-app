@@ -18,6 +18,7 @@ export interface PlayerResponse {
   n_tactic_tokens: number
   n_fleet_tokens: number
   n_strategy_tokens: number
+  n_trade_goods: number
 }
 
 export interface PlayerEventInfo {
