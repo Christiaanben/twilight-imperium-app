@@ -2,6 +2,7 @@ import { CardResponse } from '../services/web-service/interfaces'
 import { CardType } from '../interfaces/card-type'
 
 export class Card {
+  id: string
   name: string
   type: string
   subtitle: string
@@ -11,6 +12,7 @@ export class Card {
   ownedById: number | null
 
   constructor({
+    id = '',
     name = '',
     type = 'stage_1' as CardType,
     subtitle = '',
@@ -19,6 +21,7 @@ export class Card {
     victoryPoints = 0,
     ownedById = null as number | null,
   } = {}) {
+    this.id = id
     this.name = name
     this.type = type
     this.subtitle = subtitle
@@ -30,6 +33,7 @@ export class Card {
 
   static fromJson(cardResponse: CardResponse): Card {
     return new Card({
+      id: cardResponse.id,
       name: cardResponse.name,
       type: cardResponse.type,
       subtitle: cardResponse.subtitle,

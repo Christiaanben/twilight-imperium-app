@@ -1,6 +1,7 @@
 <template>
   <strategy-selection-overlay v-model="strategySelection" v-if="gameStore.phase === 'strategy'" />
   <system-selection-dialog />
+  <card-activation-dialog />
 
   <div id="pixiCanvas" ref="pixi" />
   <v-row class="d-flex justify-center" style="position: fixed; top: 4vh; width: 100vw; height: 10vh">
@@ -25,6 +26,7 @@ import { useGameStore } from '../../stores/game'
 import StrategySelectionOverlay from './components/StrategySelectionOverlay.vue'
 import * as webService from '../../services/web-service/index'
 import SystemSelectionDialog from './components/SystemSelectionDialog.vue'
+import CardActivationDialog from './components/CardActivationDialog.vue'
 import TokensCard from './components/TokensCard.vue'
 import TiCard from '../../components/cards/TiCard.vue'
 import VictoryPointTrackerOverlay from './components/VictoryPointTrackerOverlay.vue'
@@ -36,6 +38,7 @@ export default defineComponent({
     VictoryPointTrackerOverlay,
     TiCard,
     SystemSelectionDialog,
+    CardActivationDialog,
     StrategySelectionOverlay,
     TokensCard,
     HandCards,

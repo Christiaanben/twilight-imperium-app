@@ -19,6 +19,7 @@ export const useGameStore = defineStore('game', {
     phase: 'strategy' as Phase,
     units: [] as Unit[],
     selectedSystemId: null as number | null,
+    selectedCardId: null as string | null,
     cards: [] as Card[],
   }),
   getters: {
@@ -46,6 +47,9 @@ export const useGameStore = defineStore('game', {
       (ownerId: number): Card[] => {
         return state.cards.filter((card) => card.ownedById === ownerId)
       },
+    getSelectedCard: (state): Card | null => {
+      return state.cards.find((card) => card.id === state.selectedCardId) || null
+    },
   },
   actions: {
     async hydrateGame(gameId: string) {
@@ -67,6 +71,10 @@ export const useGameStore = defineStore('game', {
     activateSystem(systemId: number) {
       console.debug(`[store][game] activateSystem systemId:${systemId}`)
       webService.activateSystem(systemId)
+    },
+    activateCard(cardId: string) {
+      console.debug(`[store][game] activateCard cardId: ${cardId}`)
+      webService.activateCard(cardId)
     },
   },
 })

@@ -2,6 +2,7 @@ import { useWebSocket, UseWebSocketReturn } from '@vueuse/core'
 import { useAuthStore } from '../../stores/auth'
 import { StrategyType } from '../../interfaces/strategy-type'
 import { COMMANDS } from './commands'
+import { ACTIVATE_CARD } from './constants'
 
 let socket: UseWebSocketReturn<any> | null = null
 
@@ -36,6 +37,17 @@ export function activateSystem(systemId: number) {
       type: 'activate_system',
       kwargs: {
         system_id: systemId,
+      },
+    })
+  )
+}
+
+export function activateCard(cardId: string) {
+  socket?.send(
+    JSON.stringify({
+      type: ACTIVATE_CARD,
+      kwargs: {
+        card_id: cardId,
       },
     })
   )

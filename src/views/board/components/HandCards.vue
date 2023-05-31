@@ -1,6 +1,6 @@
 <template>
   <div class="cards">
-    <div v-for="(card, i) in cards" class="card" @click="selectCard(i)">
+    <div v-for="(card, i) in cards" class="card" @click="selectCard(card.id)">
       <div :style="`transform: translateY(${offset(i)}px) rotate(${rotation(i)}deg) scale(.8)`" class="card-face">
         <ti-card
           :type="card.type"
@@ -18,9 +18,16 @@
 import { defineComponent, PropType } from 'vue'
 import TiCard from '@/components/cards/TiCard.vue'
 import type { Card } from '../../../models/card'
+import { useGameStore } from '../../../stores/game'
 
 export default defineComponent({
   name: 'HandCards',
+  setup() {
+    const gameStore = useGameStore()
+    return {
+      gameStore,
+    }
+  },
   props: {
     cards: {
       type: Array as PropType<Card[]>,
@@ -39,8 +46,9 @@ export default defineComponent({
     offset(i: number) {
       return Math.abs(((i - (this.cards.length - 1) / 2) / (this.cards.length - 2)) * this.offsetRange)
     },
-    selectCard(i: number) {
-      console.debug('clicked', i)
+    selectCard(id: string) {
+      console.debug('HandCards.selectCard:', id)
+      this.gameStore.selectedCardId = id
     },
   },
 })

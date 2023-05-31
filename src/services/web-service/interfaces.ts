@@ -59,6 +59,7 @@ export interface UnitResponse {
 }
 
 export interface CardResponse {
+  id: string
   body: string
   flavor: string
   name: string
